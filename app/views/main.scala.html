@@ -17,13 +17,99 @@ resize:none;
 
 }
 </style>
-<script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+<script src="//code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+var candidates;
+var index=0;
+var candNum=0;
+var fliptime = 0;
+
+$('#stop').attr('disabled', true);
+ $(function(){
+                $("#start").click(function(){
+                    var textinput = $("#candidates").val();
+		    candidates = textinput.split(/\r\n|\r|\n/);
+		    stripTextArray(candidates);
+		    candNum = candidates.length;
+		    $("#result").text(candidates[0]);
+		    startFlip();
+		    $('#stop').attr('disabled', false);
+                });
+            });
+ 
+ $(function(){
+		 $("#stop").click(function(){
+			 stopFlip();
+			 });
+			 });
+
+flip = function() {
+	var randominteger = getRandomInt(0,candNum-1);
+	index = randominteger;
+	reload();
+};
+
+slowflip = function() {
+	flip();
+	fliptime++;
+	if(fliptime > 10) {
+		clearInterval(timerID);
+		$("#result").css("background-color", "red");
+		$('#start').attr('disabled', false);
+	}
+}
+
+startFlip = function() {
+	$("#result").css("background-color", "white");
+	$('#start').attr('disabled', true);
+	timerID = setInterval(flip, 100);
+};
+
+stopFlip = function() {
+	$('#stop').attr('disabled', true);
+	clearInterval(timerID);
+	fliptime = 0;
+	timerID = setInterval(slowflip, 300);
+}
+
+function getRandomInt(min, max) {
+  return Math.floor( Math.random() * (max - min + 1) ) + min;
+};
+
+var reload = function() {
+	$("#result").text(candidates[index]);
+};
+
+stripTextArray = function(textarray) {
+	var index=new Array(0);
+	var i = 0;
+	while(i<textarray.length) {
+		textarray[i]=textarray[i].replace(/\s+/g, "");
+		if (textarray[i] == "") {
+			console.log(i);
+			index.push(i);
+		}
+		i++;
+	}
+	console.log(index);
+
+	for(var num=0;num<index.length;num++) {
+		console.log("splice");
+		console.log(num);
+		console.log(index[num]);
+		textarray.splice(index[num],1);
+		console.log("result");
+		console.log(textarray);
+	}
+}
+
+</script>
 </head>
 <body>
 <h1>Button</h1>
 <table>
-	<td><input type="button" id="test" onClick="alert();"/></td>
-	<td><input type="button" id="stop" onClick="alert("stop");"/></td>
+	<td><input type="button" id="start" value="START"/></td>
+	<td><input type="button" id="stop" value="STOP"/></td>
 </table>
 <h1>List</h1>
 <textarea class="textinput" id="candidates">candidate A
@@ -32,7 +118,7 @@ candidate C
 </textarea>
 <h1>Result</h1>
 <div id="result"></div>
-
+<div id="candidatestext"></div>
 
 </div>
 </body>
