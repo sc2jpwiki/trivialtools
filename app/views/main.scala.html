@@ -39,7 +39,6 @@ $('#stop').attr('disabled', true);
 		    var reshapedtext = textinput.replace(/\n(\s)+\n/,"\n",'g','m')
 		    var reshapedtext = reshapedtext.replace(/^\n/,"",'g','m')
 		    candidates = reshapedtext.split(/\r\n|\r|\n/);
-		    stripTextArray(candidates);
 		    candNum = candidates.length;
 		    $("#result").text(candidates[0]);
 		    startFlip();
@@ -90,29 +89,6 @@ var reload = function() {
 	$("#result").text(candidates[index]);
 };
 
-stripTextArray = function(textarray) {
-	var index=new Array(0);
-	var i = 0;
-	while(i<textarray.length) {
-		textarray[i]=textarray[i].replace(/\s+/g, "");
-		if (textarray[i] == "") {
-			console.log(i);
-			index.push(i);
-		}
-		i++;
-	}
-	console.log(index);
-
-	for(var num=0;num<index.length;num++) {
-		console.log("splice");
-		console.log(num);
-		console.log(index[num]);
-		textarray.splice(index[num],1);
-		console.log("result");
-		console.log(textarray);
-	}
-}
-
 </script>
 </head>
 <body>
@@ -123,6 +99,10 @@ stripTextArray = function(textarray) {
 	<li>抽選対象を改行区切りでテキストエリアに入れてください。スペースだけの行や空行は無視されます。</li>
 	<li>Startボタンを押すとルーレットが回転し始め、Stopボタンを押して数秒経つと止まって結果が出ます。</li>
 </ul>
+</div>
+<div class="resultdiv">
+<h1 >Result</h1>
+<div id="result"></div>
 </div>
 <h1>Button</h1>
 <table>
@@ -135,10 +115,6 @@ candidate B
 candidate C
 </textarea>
 
-<div class="resultdiv">
-<h1 >Result</h1>
-<div id="result"></div>
-</div>
 
 </div>
 </body>
