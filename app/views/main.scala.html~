@@ -28,7 +28,9 @@ $('#stop').attr('disabled', true);
  $(function(){
                 $("#start").click(function(){
                     var textinput = $("#candidates").val();
-		    candidates = textinput.split(/\r\n|\r|\n/);
+		    var reshapedtext = textinput.replace("\n(\s)+\n","\n",'g','m')
+		    var reshapedtext = reshapedtext.replace("^\n","",'g','m')
+		    candidates = reshapedtext.split(/\r\n|\r|\n/);
 		    stripTextArray(candidates);
 		    candNum = candidates.length;
 		    $("#result").text(candidates[0]);
@@ -60,6 +62,7 @@ slowflip = function() {
 }
 
 startFlip = function() {
+	$("#result").css("background-color", "white");
 	$('#start').attr('disabled', true);
 	timerID = setInterval(flip, 100);
 };
