@@ -35,6 +35,7 @@ var fliptime = 0;
 $('#stop').attr('disabled', true);
  $(function(){
                 $("#start").click(function(){
+			$('#instruction').hide();
                     var textinput = $("#candidates").val();
 		    var reshapedtext = textinput.replace(/\n(\s)+\n/,"\n",'g','m')
 		    var reshapedtext = reshapedtext.replace(/^\n/,"",'g','m')
@@ -66,6 +67,7 @@ slowflip = function() {
 		clearInterval(timerID);
 		$("#result").css("background-color", "red");
 		$('#start').attr('disabled', false);
+		$('#instruction').show();
 	}
 }
 
@@ -116,7 +118,7 @@ stripTextArray = function(textarray) {
 </script>
 </head>
 <body>
-<h1>使い方</h1>
+<h1 id="instruction">使い方</h1>
 <ul>
 	<li>ルーレット的な抽選ツールです</li>
 	<li>抽選対象を改行区切りでテキストエリアに入れてください。スペースだけの行や空行は無視されます。</li>
