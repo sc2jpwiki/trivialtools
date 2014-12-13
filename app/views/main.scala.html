@@ -35,7 +35,6 @@ var fliptime = 0;
 $('#stop').attr('disabled', true);
  $(function(){
                 $("#start").click(function(){
-			$('#instruction').hide();
                     var textinput = $("#candidates").val();
 		    var reshapedtext = textinput.replace(/\n(\s)+\n/,"\n",'g','m')
 		    var reshapedtext = reshapedtext.replace(/^\n/,"",'g','m')
@@ -67,7 +66,6 @@ slowflip = function() {
 		clearInterval(timerID);
 		$("#result").css("background-color", "red");
 		$('#start').attr('disabled', false);
-		$('#instruction').show();
 	}
 }
 
