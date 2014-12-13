@@ -24,7 +24,6 @@ resize:none;
 <table>
 	<td><input type="button" id="test" onClick="alert();"/></td>
 	<td><input type="button" id="stop" onClick="alert("stop");"/></td>
-</table>
 <h1>List</h1>
 <textarea class="textinput" id="candidates">candidate A
 candidate B
