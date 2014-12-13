@@ -16,6 +16,13 @@ font-size:12px;
 resize:none;
 
 }
+
+.resultdiv div {  
+    width: 80%;  
+    margin: 0 auto;  
+    font-size: 8.0em;
+    text-align: center;
+}
 </style>
 <script src="//code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -118,9 +125,11 @@ stripTextArray = function(textarray) {
 candidate B
 candidate C
 </textarea>
-<h1>Result</h1>
+
+<div class="resultdiv">
+<h1 >Result</h1>
 <div id="result"></div>
-<div id="candidatestext"></div>
+</div>
 
 </div>
 </body>
