@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>æŠ½é¸ãƒ„ãƒ¼ãƒ«</title>
+<title>’Š‘Iƒc[ƒ‹</title>
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
 <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 <style type="text/css"> 
@@ -39,6 +39,7 @@ $('#stop').attr('disabled', true);
 		    var reshapedtext = textinput.replace(/\n(\s)+\n/,"\n",'g','m')
 		    var reshapedtext = reshapedtext.replace(/^\n/,"",'g','m')
 		    candidates = reshapedtext.split(/\r\n|\r|\n/);
+		    stripTextArray(candidates);
 		    candNum = candidates.length;
 		    $("#result").text(candidates[0]);
 		    startFlip();
@@ -89,20 +90,39 @@ var reload = function() {
 	$("#result").text(candidates[index]);
 };
 
+stripTextArray = function(textarray) {
+	var index=new Array(0);
+	var i = 0;
+	while(i<textarray.length) {
+		textarray[i]=textarray[i].replace(/\s+/g, "");
+		if (textarray[i] == "") {
+			console.log(i);
+			index.push(i);
+		}
+		i++;
+	}
+	console.log(index);
+
+	for(var num=0;num<index.length;num++) {
+		console.log("splice");
+		console.log(num);
+		console.log(index[num]);
+		textarray.splice(index[num],1);
+		console.log("result");
+		console.log(textarray);
+	}
+}
+
 </script>
 </head>
 <body>
 <div id="instruction">
-<h1 >ä½¿ã„æ–¹</h1>
+<h1 >g‚¢•û</h1>
 <ul>
-	<li>ãƒ«ãƒ¼ãƒ¬ãƒƒãƒˆçš„ãªæŠ½é¸ãƒ„ãƒ¼ãƒ«ã§ã™</li>
-	<li>æŠ½é¸å¯¾è±¡ã‚’æ”¹è¡ŒåŒºåˆ‡ã‚Šã§ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒªã‚¢ã«å…¥ã‚Œã¦ãã ã•ã„ã€‚ã‚¹ãƒšãƒ¼ã‚¹ã ã‘ã®è¡Œã‚„ç©ºè¡Œã¯ç„¡è¦–ã•ã‚Œã¾ã™ã€‚</li>
-	<li>Startãƒœã‚¿ãƒ³ã‚’æŠ¼ã™ã¨ãƒ«ãƒ¼ãƒ¬ãƒƒãƒˆãŒå›è»¢ã—å§‹ã‚ã€Stopãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦æ•°ç§’çµŒã¤ã¨æ­¢ã¾ã£ã¦çµæœãŒå‡ºã¾ã™ã€‚</li>
+	<li>ƒ‹[ƒŒƒbƒg“I‚È’Š‘Iƒc[ƒ‹‚Å‚·</li>
+	<li>’Š‘I‘ÎÛ‚ğ‰üs‹æØ‚è‚ÅƒeƒLƒXƒgƒGƒŠƒA‚É“ü‚ê‚Ä‚­‚¾‚³‚¢BƒXƒy[ƒX‚¾‚¯‚Ìs‚â‹ós‚Í–³‹‚³‚ê‚Ü‚·B</li>
+	<li>Startƒ{ƒ^ƒ“‚ğ‰Ÿ‚·‚Æƒ‹[ƒŒƒbƒg‚ª‰ñ“]‚µn‚ßAStopƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä”•bŒo‚Â‚Æ~‚Ü‚Á‚ÄŒ‹‰Ê‚ªo‚Ü‚·B</li>
 </ul>
-</div>
-<div class="resultdiv">
-<h1 >Result</h1>
-<div id="result"></div>
 </div>
 <h1>Button</h1>
 <table>
@@ -115,6 +135,10 @@ candidate B
 candidate C
 </textarea>
 
+<div class="resultdiv">
+<h1 >Result</h1>
+<div id="result"></div>
+</div>
 
 </div>
 </body>
