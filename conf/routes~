@@ -9,7 +9,7 @@ GET     /                           controllers.Application.index(name="index")
 GET	/roulette                   controllers.Application.index(name="roulette")
 
 #My Stream page
-GET     /lapack                     controllers.Application.index(name="mystream")
+GET     /lapack                     controllers.Application.index(name="lapack")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
