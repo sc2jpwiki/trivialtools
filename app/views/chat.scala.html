@@ -1,5 +1,10 @@
 @(nickName: String)(implicit request: RequestHeader)
-
+<html>
+<head>
+<title>Hello @nickName</title>
+<script src="//code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
+</head>
+<body>
   <h1>Chatroom - You are @nickName</h1>
     <form id="chatform">
     <input id="text" placeholder="Say something..." />
@@ -21,3 +26,5 @@
   });
   </script> 
 
+  </body>
+  </html>

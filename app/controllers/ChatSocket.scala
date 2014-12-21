@@ -8,6 +8,7 @@ import play.api.mvc.WebSocket
 import play.api.Play.current
 import play.api.mvc.Controller
 import play.api.mvc.Action
+import play.api.libs.concurrent.Execution.Implicits._
 
 object ChatController extends Controller {
     implicit val timeout = Timeout(1)
