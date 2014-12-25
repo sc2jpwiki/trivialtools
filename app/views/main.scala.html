@@ -15,6 +15,13 @@
 <h1>Tools</h1>
 <ul>
 	<li><a href="/roulette">Roulette Tool</a></li>
+	<li>Simple chat room for SC2 players</li>
+	<ul><li>
+	    <input id="nickName" placeholder="Your nickname" />
+		    <button id="enterchatbutton" type="submit">Enter the chat room</button>
+		    <input id="hiddenName" type ="hidden">
+	    </li>
+	    <li>簡易チャット。Custom募集などご自由にどうぞ。</li>
 	<li>To be developed</li>
 	<ul><li>i guess chat tool, mapkick tool, streaming overlay w/ chatroom, etc...</li></ul>
 </ul>
@@ -40,5 +47,31 @@ If you have any suggestion or bug report:
 	<li>Skype: lapack.rts</li>
 </ul>
 </body>
+<script type="text/javascript">
+$(function() {
+
+		$('#enterchatbutton').click(function(){
+			enterChat();
+			})
+		})
+
+                $('#nickName').keypress(function(ev) {
+			if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
+			enterChat();
+		}
+		})
+
+                function enterChat() {
+			var hiddenName = $("#hiddenName").val($('#nickName').val());
+			var chatUrl = document.location.href + 'room\/' + hiddenName.val();
+			chatUrl.replace(/\/\//, "/");
+			document.location.href = chatUrl;
+		}
+
+
+
+
+
+</script>
 </html>
 
