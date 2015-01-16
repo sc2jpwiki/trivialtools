@@ -13,8 +13,7 @@
   <ul id="messages"></ul>
   <script type="text/javascript">
   $(function() {
-    ws = new WebSocket("@routes.ChatController.chatSocket(nickName).webSocketURL()");
-    //ws = new WebSocket("ws://localhost:9000/room/socket/{nickName}")‚É‚È‚é
+    ws = new WebSocket("@routes.ChatController.chatSocket(nickName)");
     ws.onmessage = function(msg) {
       $('<li />').text(msg.data).appendTo('#messages')
 	}
