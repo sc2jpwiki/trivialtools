@@ -35,6 +35,7 @@ object Players extends Controller {
     Ok(views.html.rating.players(players))
   }
 
+
 }
 
 

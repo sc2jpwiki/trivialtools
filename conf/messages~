@@ -1,0 +1,11 @@
+rating.app.name = ELO Rating for Fun
+players.list.navigation = Ranking
+
+players.form = Player Info
+players.new = (new)
+players.new.command = New
+players.new.submit = Join
+players.new.success = Welcome {0}!
+
+validation.errors = Please correct the errors in the form.
+validation.name.duplicate = User with this name already exists
