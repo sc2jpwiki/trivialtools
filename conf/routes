@@ -8,6 +8,9 @@ GET     /                           controllers.Application.index(name="index")
 # Roulette tool
 GET	/roulette                   controllers.Application.index(name="roulette")
 
+# Rating for Fun
+GET	/rating			    controllers.Players.list
+
 #My Stream page
 GET     /lapack                     controllers.Application.index(name="lapack")
 
