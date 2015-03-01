@@ -9,8 +9,9 @@ GET     /                           controllers.Application.index(name="index")
 GET	/roulette                   controllers.Application.index(name="roulette")
 
 # Rating for Fun
-GET	/rating			    controllers.Application.index(name="rating")
-
+GET	/rating			    controllers.Players.list
+GET	/rating/newplayer	    controllers.Players.newPlayer
+POST	/rating/save		    controllers.Players.save
 #My Stream page
 GET     /lapack                     controllers.Application.index(name="lapack")
 

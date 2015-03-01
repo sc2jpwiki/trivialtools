@@ -25,7 +25,8 @@ object Players extends Controller {
     mapping(
       "name" -> nonEmptyText,
       "raceId" -> number,
-      "rating" -> number
+      "rating" -> number,
+      "password" -> nonEmptyText
     )(Player.apply)(Player.unapply)
 )
   def list = Action { implicit request =>
@@ -34,7 +35,31 @@ object Players extends Controller {
 
     Ok(views.html.rating.players(players))
   }
+  
+  def save = Action { implicit request =>
+    val newPlayerForm = playerForm.bindFromRequest()
 
+    newPlayerForm.fold(
+
+      hasErrors = { form =>
+        Redirect(routes.Players.newPlayer())
+      },
+
+      success = { newPlayer =>
+        Player.add(newPlayer)
+        Redirect(routes.Players.list())
+      }
+    )
+  }
+
+  def newPlayer = Action { implicit request =>
+    val form = if (flash.get("error").isDefined)
+      playerForm.bind(flash.data)
+    else
+      playerForm
+
+    Ok(views.html.rating.newplayer(form))
+    }
 
 }
 

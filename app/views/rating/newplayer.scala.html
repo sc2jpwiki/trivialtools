@@ -1,0 +1,18 @@
+@(playerForm: Form[Player])(implicit flash: Flash)
+@import helper._
+@import helper.twitterBootstrap._
+
+@rating(Messages("players.form")) {
+<h2>@Messages("players.form")</h2>
+
+@helper.form(action = routes.Players.save()) {
+  <fieldset>
+	  @helper.inputText(playerForm("name"))
+	  @helper.inputText(playerForm("raceId"))
+	  @helper.inputText(playerForm("rating"))
+	  @helper.inputText(playerForm("password"))
+  </fieldset>
+  <p><input type="submit" class="btn primary" value='@Messages("players.new.submit")'></p>
+  }
+}
+
