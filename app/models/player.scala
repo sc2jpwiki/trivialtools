@@ -12,6 +12,7 @@ import org.squeryl.adapters.H2Adapter
 import org.squeryl.{Session, SessionFactory}
 import play.api.db.DB
 
+import java.sql.Timestamp
 
 //Definition of Schema
 
@@ -103,32 +104,45 @@ def existOrNot(player: Player) = inTransaction {
 }
 
 case class ReportedGame(
-  reporterName: String, 
-  opponentName: String, 
+  reporter: Long, 
+  opponent: Long, 
   win: Int, 
   lose: Int, 
   oldRatingReporter: Long, 
   oldRatingOpponent: Long, 
   newRatingReporter: Long, 
   newRatingOpponent: Long, 
-  reportedDate: DateTime, 
-  confirmedDate: DateTime,
+  reportedDate: Timestamp, 
+  confirmedDate: Timestamp,
   status: GameStatus.Value
 ) extends KeyedEntity[Long] {
   val id: Long = 0
 }
 
 object ReportedGame {
-  var games = Set ()
+  import Database.reportedGamesTable
 
-  def findAll = games.toList
+  def findAll = inTransaction {
+    allQ.toList
+  }
+
+//squeryl codes
+//select
+  def allQ: Query[ReportedGame] = from(reportedGamesTable) {
+    g => select(g) orderBy(g.id desc)
+  }
+
+//insert
+  def add(game: ReportedGame) = inTransaction{
+    reportedGamesTable.insert(game)
+  }
 }
 
 //enumerator of game status
 object GameStatus extends Enumeration {
-  val Reported = Value("Reported")
-  val Confirmed = Value("Confirmed")
-  val Rejected = Value("Rejected")
+  val Reported = Value(1,"Reported")
+  val Confirmed = Value(2,"Confirmed")
+  val Rejected = Value(3,"Rejected")
 }
 
 //not model class. not correspond to a database table

@@ -15,12 +15,12 @@ CREATE TABLE reportedgames (
 	opponent long,
 	win long,
 	lose long,
-	old_rating_reporter long,
-	old_rating_opponent long,
-	new_rating_reporter long,
-	new_rating_opponent long,
-	reported_date date,
-	confirmed_date date,
+	oldratingreporter long,
+	oldratingopponent long,
+	newratingreporter long,
+	newratingopponent long,
+	reporteddate date,
+	confirmeddate date,
 	status varchar);
 
 # --- !Downs

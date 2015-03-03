@@ -27,6 +27,7 @@ import org.squeryl.adapters.H2Adapter
 import org.squeryl.{Session, SessionFactory}
 import play.api.db.DB
 
+import java.sql.Timestamp
 //top page
 
 object Homepage extends Controller {
@@ -121,14 +122,15 @@ def submit = Action { implicit request =>
         val (reporterNewElo, opponentNewElo) = calclateElo(reporterInTable.rating, opponentInTable.rating, report.win, report.lose)
 
         //setting values to ReportedGame instance
-        val gameTobeReported = ReportedGame(reporterInTable.name, opponentInTable.name, report.win, report.lose, reporterInTable.rating, opponentInTable.rating,
-          reporterNewElo, opponentNewElo, new DateTime(), new DateTime(9999,12,31,0,0,0), GameStatus.Reported)
+        val gameTobeReported = ReportedGame(reporterInTable.id, opponentInTable.id, report.win, report.lose, reporterInTable.rating, opponentInTable.rating,
+          reporterNewElo, opponentNewElo,  new Timestamp(System.currentTimeMillis()), new Timestamp(Long.MaxValue), GameStatus.Reported)
 
         //update players table elo
         Player.updateElo(reporterInTable.name, reporterNewElo)
         Player.updateElo(opponentInTable.name, opponentNewElo)
 
         //insert to reported games table
+        ReportedGame.add(gameTobeReported)
 
         //commit
 
