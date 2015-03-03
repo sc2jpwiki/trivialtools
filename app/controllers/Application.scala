@@ -127,7 +127,7 @@ def submit = Action { implicit request =>
 
         //setting values to ReportedGame instance
         val gameTobeReported = ReportedGame(reporterInTable.id, opponentInTable.id, report.win, report.lose, reporterInTable.rating, opponentInTable.rating,
-          reporterNewElo, opponentNewElo,  new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis())
+          reporterNewElo, opponentNewElo,  new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()))
 
         //update players table elo
         Player.updateElo(reporterInTable.name, reporterNewElo)
