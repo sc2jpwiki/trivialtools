@@ -113,12 +113,12 @@ case class ReportedGame(
   opponent: Long, 
   win: Long, 
   lose: Long, 
-  oldRatingReporter: Long, 
-  oldRatingOpponent: Long, 
-  newRatingReporter: Long, 
-  newRatingOpponent: Long, 
-  reportedDate: Timestamp, 
-  confirmedDate: Timestamp
+  oldratingreporter: Long, 
+  oldratingopponent: Long, 
+  newratingreporter: Long, 
+  newratingopponent: Long, 
+  reporteddate: Timestamp, 
+  confirmeddate: Timestamp
 ) extends KeyedEntity[Long] {
   val id: Long = 0
 }
@@ -149,7 +149,7 @@ object ReportedGame {
 //join
   def allMatchHistory = 
     join(allQ, playersTable, playersTable)((g, a, b) =>
-    select(a.name, b.name, g.win, g.lose, g.newRatingReporter, g.newRatingOpponent, g.reportedDate)
+    select(a.name, b.name, g.win, g.lose, g.newratingreporter, g.newratingopponent, g.reporteddate)
     on(g.reporter === a.id, g.opponent === b.id)
   )
 //insert
