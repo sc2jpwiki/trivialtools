@@ -28,6 +28,9 @@ import org.squeryl.{Session, SessionFactory}
 import play.api.db.DB
 
 import java.sql.Timestamp
+
+import math._
+
 //top page
 
 object Homepage extends Controller {
@@ -157,8 +160,20 @@ def submit = Action { implicit request =>
 
 //elo calculation function
 def calclateElo(reporterOldElo: Long, opponentOldElo: Long, win: Int, lose: Int) = {
-  val reporterNewElo = reporterOldElo + 10*(win-lose)
-  val opponentNewElo = opponentOldElo - 10*(win-lose)
+  val qReporter = 10^(reporterOldElo/400) :Double
+  val qOpponent = 10^(opponentOldElo/400) :Double
+
+  val eReporter = qReporter/(qReporter + qOpponent) :Double
+  val eOpponent = qOpponent/(qReporter + qOpponent) :Double
+
+  val K = 32 //constant for elo update
+
+  val gamesNum = win + lose
+
+  val eloGain = round( K * (win - gamesNum * eReporter)) :Long
+
+  val reporterNewElo = reporterOldElo + eloGain
+  val opponentNewElo = opponentOldElo - eloGain
   (reporterNewElo, opponentNewElo)
 }
 

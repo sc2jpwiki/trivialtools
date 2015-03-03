@@ -128,7 +128,16 @@ object ReportedGame {
   import Database.playersTable
 
   def findAll = inTransaction {
-    allMatchHistory.toList
+    
+    def compareWith7th = (
+      (
+        x: (String, String, Long, Long, Long, Long, java.sql.Timestamp), 
+        y: (String, String, Long, Long, Long, Long, java.sql.Timestamp)
+      ) => 
+      (x._7).after(y._7)
+    )
+
+  allMatchHistory.toList sortWith compareWith7th
   }
 
 //squeryl codes
@@ -139,7 +148,7 @@ object ReportedGame {
 
 //join
   def allMatchHistory = 
-    join(reportedGamesTable, playersTable, playersTable)((g, a, b) =>
+    join(allQ, playersTable, playersTable)((g, a, b) =>
     select(a.name, b.name, g.win, g.lose, g.newRatingReporter, g.newRatingOpponent, g.reportedDate)
     on(g.reporter === a.id, g.opponent === b.id)
   )
