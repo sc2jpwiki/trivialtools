@@ -81,6 +81,11 @@ object Player {
 //findByName
   def findByName(name: String): Player = byNameQ(name).toList.head
 
+//isNameUsed
+  def isNameNotUsed(name: String) = inTransaction {
+    byNameQ(name).toList.isEmpty
+  }
+
 //authentication name is supposed to be unique key
   def auth(player: Player):Boolean = inTransaction { 
     if(existOrNot(player)) {
@@ -106,24 +111,24 @@ def existOrNot(player: Player) = inTransaction {
 case class ReportedGame(
   reporter: Long, 
   opponent: Long, 
-  win: Int, 
-  lose: Int, 
+  win: Long, 
+  lose: Long, 
   oldRatingReporter: Long, 
   oldRatingOpponent: Long, 
   newRatingReporter: Long, 
   newRatingOpponent: Long, 
   reportedDate: Timestamp, 
-  confirmedDate: Timestamp,
-  status: GameStatus.Value
+  confirmedDate: Timestamp
 ) extends KeyedEntity[Long] {
   val id: Long = 0
 }
 
 object ReportedGame {
   import Database.reportedGamesTable
+  import Database.playersTable
 
   def findAll = inTransaction {
-    allQ.toList
+    allMatchHistory.toList
   }
 
 //squeryl codes
@@ -132,6 +137,12 @@ object ReportedGame {
     g => select(g) orderBy(g.id desc)
   }
 
+//join
+  def allMatchHistory = 
+    join(reportedGamesTable, playersTable, playersTable)((g, a, b) =>
+    select(a.name, b.name, g.win, g.lose, g.newRatingReporter, g.newRatingOpponent, g.reportedDate)
+    on(g.reporter === a.id, g.opponent === b.id)
+  )
 //insert
   def add(game: ReportedGame) = inTransaction{
     reportedGamesTable.insert(game)
@@ -140,6 +151,7 @@ object ReportedGame {
 
 //enumerator of game status
 object GameStatus extends Enumeration {
+  type GameStatus = Value
   val Reported = Value(1,"Reported")
   val Confirmed = Value(2,"Confirmed")
   val Rejected = Value(3,"Rejected")

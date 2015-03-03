@@ -19,9 +19,8 @@ CREATE TABLE reportedgames (
 	oldratingopponent long,
 	newratingreporter long,
 	newratingopponent long,
-	reporteddate date,
-	confirmeddate date,
-	status varchar);
+	reporteddate timestamp,
+	confirmeddate timestamp);
 
 # --- !Downs
 

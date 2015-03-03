@@ -14,6 +14,8 @@ GET	/rating/newplayer	    controllers.Players.newPlayer
 POST	/rating/save		    controllers.Players.save
 GET	/rating/report		    controllers.Players.report
 POST	/rating/submit		    controllers.Players.submit
+GET	/rating/matchhistory	    controllers.Players.matchhistory
+
 #My Stream page
 GET     /lapack                     controllers.Homepage.index(name="lapack")
 

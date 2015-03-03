@@ -1,0 +1,36 @@
+@(games: List[((String, String, Long, Long, Long, Long, java.sql.Timestamp))])(implicit flash: Flash)
+
+@rating(Messages("players.history")) {
+
+
+<table class="players table">
+	<thead>
+	<tr>
+		<th>Player A</th>
+		<th>Player B</th>
+		<th>A's win</th>
+		<th>B's win</th>
+		<th>Elo of Player A after this match</th>
+		<th>Elo of Player B after this match</th>
+		<th>Timestamp</th>
+	</tr>
+</thead>
+<tbody>
+
+	@for((game, index) <- games.zipWithIndex) {
+	<tr>
+		<td>@game._1</td>
+		<td>@game._2</td>
+		<td>@game._3</td>
+		<td>@game._4</td>
+		<td>@game._5</td>
+		<td>@game._6</td>
+		<td>@game._7</td>
+	</tr>
+	}
+	</tbody>
+</table>
+
+<script type="text/javascript">$("#matchhistory").attr("class","active");</script>
+
+}

@@ -51,7 +51,7 @@ object Players extends Controller {
   //new player form
   private val playerForm = Form(
     mapping(
-      "name" -> nonEmptyText,
+      "name" -> nonEmptyText.verifying("validation.name.duplicate", Player.isNameNotUsed(_)),
       "race" -> nonEmptyText,
       "rating" -> longNumber,
       "password" -> nonEmptyText
@@ -63,12 +63,13 @@ private val reportForm: Form[Report] = Form(
   mapping(
     "name" -> nonEmptyText,
     "opponent" -> nonEmptyText,
-    "win" -> number,
-    "lose" -> number,
+    "win" -> number.verifying("can't be negative number", {_ >= 0}),
+  "lose" -> number.verifying("can't be negative number", {_ >= 0}),
     "password" -> nonEmptyText
   )(Report.apply)(Report.unapply)
 )
 
+//Go-to ranking page action
   def list = Action { implicit request =>
     val players = Player.findAll
     Ok(views.html.rating.players(players))
@@ -112,7 +113,7 @@ def submit = Action { implicit request =>
     //auth reporter
     if(Player.auth(reporter)) {
       //existense check of opponent
-      if(Player.existOrNot(opponent)) {
+      if(Player.existOrNot(opponent) & reporter.name != opponent.name) {
         //query for players old elo
         transaction {
         val reporterInTable = Player.findByName(reporter.name)
@@ -123,7 +124,7 @@ def submit = Action { implicit request =>
 
         //setting values to ReportedGame instance
         val gameTobeReported = ReportedGame(reporterInTable.id, opponentInTable.id, report.win, report.lose, reporterInTable.rating, opponentInTable.rating,
-          reporterNewElo, opponentNewElo,  new Timestamp(System.currentTimeMillis()), new Timestamp(Long.MaxValue), GameStatus.Reported)
+          reporterNewElo, opponentNewElo,  new Timestamp(System.currentTimeMillis()), new Timestamp(Long.MaxValue))
 
         //update players table elo
         Player.updateElo(reporterInTable.name, reporterNewElo)
@@ -141,8 +142,8 @@ def submit = Action { implicit request =>
           Redirect(routes.Players.list()).flashing("success" -> message)
 
 
-      } else { // opponent doesnt exist
-      val message = Messages("players.report.opponent.notexist") //to be overwrittern
+      } else { // opponent doesnt exist or same name as reporter
+      val message = Messages("players.report.opponent.error") //to be overwrittern
       Redirect(routes.Players.report()).flashing("error" -> message)//to be overwrittern
     } 
   } else { //if auth failed
@@ -189,10 +190,17 @@ Ok(views.html.rating.report(form))
   else
     playerForm
   Ok(views.html.rating.newplayer(form))
+  }
+  
+  //Go-to history page Action
+  def matchhistory = Action { implicit request =>
+  val games = ReportedGame.findAll
+  Ok(views.html.rating.history(games))
+  }
+
+
 }
-}
 
-
-
+  
 
 
