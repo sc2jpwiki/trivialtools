@@ -3,17 +3,18 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index(name="index")
+GET     /                           controllers.Homepage.index(name="index")
 
 # Roulette tool
-GET	/roulette                   controllers.Application.index(name="roulette")
+GET	/roulette                   controllers.Homepage.index(name="roulette")
 
 # Rating for Fun
 GET	/rating			    controllers.Players.list
 GET	/rating/newplayer	    controllers.Players.newPlayer
 POST	/rating/save		    controllers.Players.save
+GET	/rating/report		    controllers.Players.report
 #My Stream page
-GET     /lapack                     controllers.Application.index(name="lapack")
+GET     /lapack                     controllers.Homepage.index(name="lapack")
 
 #ChatSample
 GET     /room/:nickName             controllers.ChatController.showRoom(nickName:String)

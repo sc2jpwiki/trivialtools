@@ -7,10 +7,15 @@
 
 @helper.form(action = routes.Players.save()) {
   <fieldset>
+	  <input type="hidden" id="id" name="id" value="0" >
 	  @helper.inputText(playerForm("name"))
-	  @helper.inputText(playerForm("raceId"))
+	  @helper.inputPassword(playerForm("password"))
+	  @inputRadioGroup(
+          playerForm("race"),
+	  options = options("Terran"->"Terran","Protoss"->"Protoss", "Zerg" -> "Zerg", "Random" -> "Random"),
+          '_label -> "Race",
+          '_error -> playerForm("race").error.map(_.withMessage("select your race")))
 	  @helper.inputText(playerForm("rating"))
-	  @helper.inputText(playerForm("password"))
   </fieldset>
   <p><input type="submit" class="btn primary" value='@Messages("players.new.submit")'></p>
   }
