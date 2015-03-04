@@ -123,7 +123,7 @@ def submit = Action { implicit request =>
         val opponentInTable = Player.findByName(opponent.name)
 
         //calculating elo
-        val (reporterNewElo, opponentNewElo) = calclateElo(reporterInTable.rating, opponentInTable.rating, report.win, report.lose)
+        val (reporterNewElo, opponentNewElo) = calclateElo(32.0, reporterInTable.rating, opponentInTable.rating, report.win, report.lose)
 
         //setting values to ReportedGame instance
         val gameTobeReported = ReportedGame(reporterInTable.id, opponentInTable.id, report.win, report.lose, reporterInTable.rating, opponentInTable.rating,
@@ -159,18 +159,17 @@ def submit = Action { implicit request =>
 }
 
 //elo calculation function
-def calclateElo(reporterOldElo: Long, opponentOldElo: Long, win: Int, lose: Int) = {
-  val qReporter = 10^(reporterOldElo/400) :Double
-  val qOpponent = 10^(opponentOldElo/400) :Double
 
-  val eReporter = qReporter/(qReporter + qOpponent) :Double
-  val eOpponent = qOpponent/(qReporter + qOpponent) :Double
+def calculateElo(k: Doulbe)(reporterOldElo: Long, opponentOldElo: Long, win: Int, lose: Int) = {
+  val qReporter = pow(10,reporterOldElo*1.0/400) :Double
+  val qOpponent = pow(10, opponentOldElo*1.0/400) :Double
+  val qRatio = pow(10, (opponentOldElo-reporterOldElo)*1/400) :Double
 
-  val K = 32 //constant for elo update
+  val eReporter = 1.0/(1.0+qRatio) :Double
 
   val gamesNum = win + lose
 
-  val eloGain = round( K * (win - gamesNum * eReporter)) :Long
+  val eloGain = round( k * (win - gamesNum * eReporter)) :Long
 
   val reporterNewElo = reporterOldElo + eloGain
   val opponentNewElo = opponentOldElo - eloGain
