@@ -123,7 +123,7 @@ def submit = Action { implicit request =>
         val opponentInTable = Player.findByName(opponent.name)
 
         //calculating elo
-        val (reporterNewElo, opponentNewElo) = calculateElo(32.0, reporterInTable.rating, opponentInTable.rating, report.win, report.lose)
+        val (reporterNewElo, opponentNewElo) = calculateElo(32.0)(reporterInTable.rating, opponentInTable.rating, report.win, report.lose)
 
         //setting values to ReportedGame instance
         val gameTobeReported = ReportedGame(reporterInTable.id, opponentInTable.id, report.win, report.lose, reporterInTable.rating, opponentInTable.rating,
