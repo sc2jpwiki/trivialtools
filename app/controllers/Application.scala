@@ -163,7 +163,7 @@ def submit = Action { implicit request =>
 def calculateElo(k: Double)(reporterOldElo: Long, opponentOldElo: Long, win: Int, lose: Int) = {
   val qReporter = pow(10,reporterOldElo*1.0/400) :Double
   val qOpponent = pow(10, opponentOldElo*1.0/400) :Double
-  val qRatio = pow(10, (opponentOldElo-reporterOldElo)*1/400) :Double
+  val qRatio = pow(10, (opponentOldElo-reporterOldElo)*1.0/400) :Double
 
   val eReporter = 1.0/(1.0+qRatio) :Double
 
