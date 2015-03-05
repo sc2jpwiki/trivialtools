@@ -11,9 +11,37 @@
 	  @helper.inputText(reportForm("name"))
 	  @helper.inputPassword(reportForm("password"))
 	  @helper.inputText(reportForm("opponent"))
-	  @helper.inputText(reportForm("win"))
-	  @helper.inputText(reportForm("lose"))
-	
+	  @select(reportForm("win"),
+	    options(
+	    "0"  -> "0",
+	    "1"  -> "1",
+	    "2"  -> "2",
+	    "3" -> "3",
+	    "4" -> "4",
+	    "5" -> "5",
+	    "6" -> "6",
+	    "7" -> "7",
+	    "8" -> "8",
+	    "9" -> "9",
+	    "10" -> "10"
+	    )
+	    )
+	    @select(reportForm("lose"),
+	    options(
+	    "0"  -> "0",
+	    "1"  -> "1",
+	    "2"  -> "2",
+	    "3" -> "3",
+	    "4" -> "4",
+	    "5" -> "5",
+	    "6" -> "6",
+	    "7" -> "7",
+	    "8" -> "8",
+	    "9" -> "9",
+	    "10" -> "10"
+	    )
+	    )
+
   </fieldset>
   <p><input type="submit" class="btn primary" value='@Messages("players.report.submit")'></p>
   }
