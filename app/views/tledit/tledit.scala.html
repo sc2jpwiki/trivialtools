@@ -1,0 +1,412 @@
+@(title: String)
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>@title</title>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+<style type="text/css"> 
+textarea  {
+
+    width:600px;
+    height:300px;
+    font-size:14px;
+    resize:none;
+
+}
+
+.resultdiv div {  
+    width: 90%;  
+    margin: 0 auto;  
+    font-size: 8.0em;
+    text-align: center;
+}
+
+</style>
+<script src="//code.jquery.com/jquery-1.9.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+                //REGEXPS
+
+                var regH1 = /^#[^#].+/
+                        var regH2 = /^##[^#].+/
+                        var regH3 = /^###[^#].+/
+
+                        var regL1 = /^-[^-].+/
+                        var regL2 = /^--[^-].+/
+                        var regL3 = /^---[^-].+/
+
+                        var regHContent = /[^#].*/
+                        var regLContent = /[^-].*/
+
+                        var preprocess = function(input_text) {
+                                var inputLines = input_text.split(/\r\n|\r|\n/);
+                                var currentLevel = 0;
+                                var result = [];
+                                for (var i=0; i<inputLines.length; i++) {
+                                        var line = inputLines[i];
+                                        console.log(line);	
+
+                                        var indentDiff = 0;
+                                        // check indentDiff
+                                        var l1 = line.match(regL1);
+                                        var l2 = line.match(regL2);
+                                        var l3 = line.match(regL3);
+                                        var newLevel = 0;
+                                        if (l1) { newLevel = 1; }
+                                        if (l2) { newLevel = 2; }
+                                        if (l3) { newLevel = 3; }
+                                        indentDiff = newLevel - currentLevel;
+                                        currentLevel = newLevel;
+
+
+                                        //HEADER 1
+                                        var h1 = line.match(regH1);
+                                        console.log(h1);
+                                        if (h1) {console.log("MATCH");}
+                                        else {console.log("NOT MATCH");}
+
+                                        if (h1) {
+                                                var content = line.match(regHContent)[0];			
+                                                result.push(
+                                                                {
+type: "H1",
+indent: indentDiff,
+text: content			
+}
+);
+                                                continue;
+                                                }
+
+//HEADER 2
+var h2 = line.match(regH2);
+if (h2) {
+        var content = line.match(regHContent)[0];			
+        result.push(
+                        {
+type: "H2",
+indent: indentDiff,
+text: content			
+}
+);
+        continue;
+        }
+
+//HEADER 3
+var h3 = line.match(regH3);
+if (h3) {
+        var content = line.match(regHContent)[0];			
+        result.push(
+                        {
+type: "H3",
+indent: indentDiff,
+text: content			
+}
+);
+        continue;
+}
+
+//Get List Items text content
+if (l1||l2||l3) {
+        var content = line.match(regLContent)[0];
+
+        result.push(
+                        {
+type: "L",
+indent: indentDiff,
+text: content			
+});
+continue;
+}
+
+//Default: when not a header line nor list item
+result.push(
+                {
+type: "D",
+indent: indentDiff,
+text: line
+});
+continue;
+
+
+
+}
+return result;
+};
+
+//Definition of Line-Types
+var lineType = function (htmlTagA,htmlTagB, teamliquidTagA, teamliquidTagB) {
+        return {
+                htmlTagA: htmlTagA,
+                htmlTagB: htmlTagB,
+                teamliquidTagA: teamliquidTagA,
+                teamliquidTagB: teamliquidTagB
+        };
+}
+
+var LineTypesTable = {
+        H1: lineType("<h2>", "</h2>", "[big][big][big]", "[/big][/big][/big]"),
+        H2: lineType("<h3>", "</h3>", "[big][big]", "[/big][/big]"),
+        H3: lineType("<h4>", "</h4>", "[big]", "[/big]"),
+        L: lineType("<li>", "</li>", "[*]", ""),
+        D: lineType("","<br>","","")
+}
+
+console.log("LineTypesTable:");
+console.log(LineTypesTable);
+
+var IndentTypesTable = [
+]
+
+console.log(LineTypesTable);
+
+//FUNCTIONS to generate "TABLE OF CONTENTS"//
+
+var contents = {};
+var generateContents = function(input_text) {
+                                var inputLines = input_text.split(/\r\n|\r|\n/);
+                                var result = [];
+                                var currentLevel = 0;
+
+                                result.push({
+                                                type: "H1",
+                                                indent: 0,
+                                                text: "Table of Contents"
+                                                });
+
+                                for(var k=0; k < inputLines.length; k++) {
+                                        //HEADER 1
+                                        var line = inputLines[k];
+                                        var h1 = line.match(regH1);
+
+                                        if (h1) {
+                                                var content = line.match(regHContent)[0];			
+                                                var newLevel = 1;
+                                                result.push(
+                                                                {
+                                                                        type: "L",
+                                                                        indent: newLevel - currentLevel,
+                                                                        text: content			
+                                                                 }
+                                                );
+                                                currentLevel = newLevel;
+                                                continue;
+                                                }
+
+                                        //HEADER 2
+                                        var h2 = line.match(regH2);
+                                        if (h2) {
+                                                var content = line.match(regHContent)[0];			
+                                                var newLevel = 2;
+                                                result.push(
+                                                                {
+                                                                        type: "L",
+                                                                        indent: newLevel - currentLevel,
+                                                                        text: content			
+                                                                 }
+                                                );
+                                                currentLevel = newLevel;
+                                                continue;
+                                                }
+
+                                        //HEADER 3
+                                        var h3 = line.match(regH3);
+                                        if (h3) {
+                                                var content = line.match(regHContent)[0];			
+                                                var newLevel = 3;
+                                                result.push(
+                                                                {
+                                                                        type: "L",
+                                                                        indent: newLevel - currentLevel,
+                                                                        text: content			
+                                                                 }
+                                                );
+                                                currentLevel = newLevel;
+                                                continue;
+                                                }
+
+                                        }
+                                
+                                result.push({
+                                                type: "D",
+                                                indent: -currentLevel,
+                                                text: ""
+                                                });
+                                return result;
+};
+
+//Preview
+var generatePreview = function(text) {
+        console.log("arg for generatePreview");
+        console.log(text);
+        var contentsTable = generateContents(text);
+        var lines = contentsTable.concat(preprocess(text));
+        console.log("preprocess'ed generatePreview");
+        console.log(lines);
+        var result = "";
+
+        for (var j = 0; j < lines.length; j++) {
+                console.log(lines[j]);
+                console.log("line[text]:");
+                console.log(lines[j]["text"]);
+                var transformedLine = lines[j]["text"]
+
+                //Insert / Append Header Tags or List Item Tags: h2-h4 li
+                var lineType = lines[j]["type"];
+
+                transformedLine = LineTypesTable[lineType]["htmlTagA"] + transformedLine + LineTypesTable[lineType]["htmlTagB"];
+
+                //Insert or Append List Tags <ul> or </ul>
+                if(lines[j]["indent"] < 0) {
+                        var absValueOfIndent = - lines[j]["indent"];
+                        var insertedTag = "";
+                        for(var i = 0; i< absValueOfIndent; i++) {
+                                insertedTag += "</ul>"
+                        }
+                        transformedLine = insertedTag + transformedLine;
+                } else if (lines[j]["indent"] >0) {
+                        var absValueOfIndent = lines[j]["indent"];
+                        var insertedTag = "";
+                        for(var i = 0; i< absValueOfIndent; i++) {
+                                insertedTag += "<ul>"
+                        }
+                        transformedLine = insertedTag + transformedLine;
+                } else {
+                }
+
+         result += transformedLine;
+
+        }
+
+        console.log(result);
+        return result;
+        
+}
+
+//Translate to teamliquid formatt
+
+var translate = function(text) {
+        console.log("arg for translate");
+        console.log(text);
+        var contentsTable = generateContents(text);
+        var lines = contentsTable.concat(preprocess(text));
+        console.log("preprocess'ed generatePreview");
+        console.log(lines);
+        var result = "";
+
+        for (var j = 0; j < lines.length; j++) {
+                console.log(lines[j]);
+                console.log("line[text]:");
+                console.log(lines[j]["text"]);
+                var transformedLine = lines[j]["text"]
+
+                //Insert / Append Header Tags or List Item Tags: h2-h4 li
+                var lineType = lines[j]["type"];
+
+                transformedLine = LineTypesTable[lineType]["teamliquidTagA"] + transformedLine + LineTypesTable[lineType]["teamliquidTagB"];
+
+                //Insert or Append List Tags <ul> or </ul>
+                if(lines[j]["indent"] < 0) {
+                        var absValueOfIndent = - lines[j]["indent"];
+                        var insertedTag = "";
+                        for(var i = 0; i< absValueOfIndent; i++) {
+                                insertedTag += "[/list]"
+                        }
+                        transformedLine = insertedTag + transformedLine;
+                } else if (lines[j]["indent"] >0) {
+                        var absValueOfIndent = lines[j]["indent"];
+                        var insertedTag = "";
+                        for(var i = 0; i< absValueOfIndent; i++) {
+                                insertedTag += "[list]"
+                        }
+                        transformedLine = insertedTag + transformedLine;
+                } else {
+                }
+
+         //add br to eachline
+         transformedLine += "\r\n";
+         result += transformedLine;
+
+        }
+
+        console.log(result);
+        return result;
+        
+}
+
+//Definition of behavior of each buttons//
+                $("#test").click(function(){
+                        var input = $("#textinput").val();
+                        var output = generateContents(input);
+                        var preview = generatePreview(input);
+                        console.log("OUTPUT OF generatePreview FUNCTION");
+                        console.log(preview);
+                        console.log("OUTPUT OF generateC FUNCTION");
+                        console.log(output);
+                        
+                        console.log("contentstable + preview");
+                        console.log(output + preview);
+
+                        });
+
+                $("#getPreview").click(function(){
+                        var input = $("#textinput").val();
+                        var previewHtml = generatePreview(input);
+                        $("#preview").html(previewHtml);
+                        });
+
+
+
+                $("#getResult").click(function(){
+                        var input = $("#textinput").val();
+                        var resultHtml = translate(input);
+                        $("#result").html(resultHtml);
+                        });
+
+//initial preview
+                        var input = $("#textinput").val();
+                        var previewHtml = generatePreview(input);
+                        $("#preview").html(previewHtml);
+})
+
+</script>
+</head>
+<body>
+<h1>Menu</h1>
+<table>
+	<td><input type="button" id="getPreview" value="Preview"/></td>
+	<td><input type="button" id="getResult" value="Get Result"/></td>
+</table>
+<table>
+        <tr>
+        <td>
+<h1>Edit window</h1>
+<textarea id="textinput">
+#Header 1
+
+##Header 2
+
+###Header 3
+-Item 1
+-Item 2
+-Item 3
+--Nest
+--Nest
+</textarea>
+</td>
+<td>
+<h1 >Result</h1>
+<textarea id="result"></textarea>
+</td>
+
+</tr>
+</table>
+<h1>Preview</h1>
+<div id="preview"></div>
+</body>
+</html>
