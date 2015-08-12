@@ -16,6 +16,9 @@ GET	/rating/report		    controllers.Players.report
 POST	/rating/submit		    controllers.Players.submit
 GET	/rating/matchhistory	    controllers.Players.matchhistory
 
+# Teamliquid Forum Editor
+GET     /tledit                     controllers.Homepage.index(name="tledit")
+
 #My Stream page
 GET     /lapack                     controllers.Homepage.index(name="lapack")
 
