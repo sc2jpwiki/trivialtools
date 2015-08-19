@@ -1,4 +1,4 @@
-name := "myFirstApp"
+name := "SC2Trivialtools"
 
 version := "1.0-SNAPSHOT"
 
