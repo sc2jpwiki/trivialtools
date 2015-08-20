@@ -1,0 +1,289 @@
+@(title: String)
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>@title</title>
+
+<!-- jQuery 1.9.0 -->
+<script src="//code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/scheme.less")">
+<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/1pxdeep.less")">
+<style type="text/css">
+	progress {
+		width: 500px;
+		height: 50px;
+		align: center;
+	}
+
+</style>
+<script>
+  $(document).ready(function(){
+    $("#rules").hide();
+    $("#regstration").hide();
+    $("#donation").hide();
+    $("#home").show()
+
+//BUTTON BEHAVIOR
+	$("#homebutton")
+	$("#registbutton")
+	$("#contactbutton").click(function() {
+		$(".tabswitch").hide();
+		$("li").removeClass("active");
+		$("#contactbuttun").addClass("active");
+		$("#contact").show();
+    });
+
+    $("#rulebutton").click(function() {
+		$(".tabswitch").hide();
+		$("li").removeClass("active");
+		$("#rulebutton").addClass("active");
+		$("#rules").show();
+    });
+
+    $("#donationbutton").click(function() {
+		$(".tabswitch").hide();
+		$("li").removeClass("active");
+		$("#donation").show();
+    });
+
+  });
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="header clearfix">
+		<nav>
+			<ul class="nav nav-pills pull-right">
+				<li role="presentation" id="homebutton" class="active"><a href="#">Home</a></li>
+				<li role="presentation" id="registbutton"><a href="http://challonge.com/tournaments/signup/FHld7bDRwZ">参加登録</a></li>
+				<li role="presentation" id="rulebutton"><a href="#">大会ルール</a></li>
+				<li id="contact" role="presentation" id="contactbutton"><a href="#">Contact</a></li>
+			</ul>
+		</nav>
+		<h3 class="text-muted">ビルドWiki不定期イベント第2弾</h3>
+	</div>
+	<!-//////////////////////////////////////////////
+    <div id="home" class="tabswitch">
+	<div class="jumbotron">
+		<h1>第2回Wikiトーナメント </h1>
+		<hr>
+		<h4>ファンディング進捗: <p class="lead">￥5000/￥20000</p></h4>
+		<progress value="5000" max="20000"></progress>
+		<h4>これまでの支援者</h4>
+		<ul><li>1日間で1人が支援しています。</li><li>残り期間は30日です。</li></ul>
+		<hr>
+		<p><a class="btn btn-lg btn-success" id="donationbutton" href="#" role="button">第2回Wikiトーナメントを支援する</a></p>
+		
+	</div>
+
+	<div class="row marketing home">
+		<div class="col-lg-6">
+
+			<h4>予算配分(￥20000を達成した場合）</h4>
+			<p><ul>
+<li>1位: 50%</li>
+<li>2位: 25%</li>
+<li>RTキャンペーン;LotV製品版視聴者プレゼント :25%</li>
+			</ul></p>
+			<h4>寄付支援者特典</h4>
+			<p><ul>
+			<li>￥10000: 公式スポンサー(1枠): 大会名と配信で使用するテーマ画像にPowered by XXXとクレジットがつきます。ロゴなどをお持ちの場合はそちらも掲載可能ですし、Webサイトをお持ちの場合大会ページおよび配信ページへリンクを掲載することも出来ます。</li>
+			<li>￥2000: コーチング(1枠)</li>
+			<li>￥1500: 記事オーダーメイド権(1枠）</li>
+			<li>￥1000: トップサポーター（枠制限なし）: ゴールドサポーターの特典に加え、大会テーマ画像に名前が掲載されます。</li>
+			<li>￥500: ゴールドサポーター: ブロンズサポーターの特典に加え、配信ページに名前が掲載されます。</li>
+			<li>￥15: ブロンズサポーター: 大会トップページに名前とメッセージが掲載されます。</li>
+		</ul></p>
+
+			<h4>ゴール: サブゴール</h4>
+			<ul>
+				<li>￥5000: トーナメント開催決定、賞品は優勝者のみ <input type="checkbox" checked="checked">達成</li>
+				<li>￥10000: 2位に準優勝賞品授与</li>
+				<li>￥15000: 最新作StarCraft II: Legacy of the Voidの視聴者プレゼント実施</li>
+				<li>￥20000: 今大会の目標額</li>
+				<li>￥30000: 今大会の予算上限、万が一超えた場合は次回以降に持ち越し</li>
+			</ul>
+
+		</div>
+
+		<div class="col-lg-6">
+			<h4>Heartful Supporters</h4>
+			<h5>ビルドWiki</h5>
+			￥5000
+
+		</div>
+	</div>
+	</div>
+	<!-//////////////////////////////////////////////>>
+    <div id="rules" class="row marketing tabswitch">
+		<div class="col-lg-8">
+			<div class="redactor_editor expanded">
+				<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1>第1回Wikiトーナメント<br>
+			</h1>
+				<hr><h2>ルール Rules<br>
+			</h2><h4>参加資格 Eligibility<br>
+			</h4><ul>
+				<li>日本語の読み書きと会話ができること。(Participants must be able to speak, read, and write in Japanese.)</li>
+				<li>
+					<a href="http://challonge.com/tournaments/signup/FqnJJzVg35" target="_blank">Challongeの参加登録ページ</a> からSign Upして、当日チェックイン時間内にチェックインをすること。<br>
+				</li>
+				<li>
+					<a href="https://docs.google.com/forms/d/167cm7Ccik9dNN7AXJwkU_UiTrbM9DS155A2aPpyJUJs/viewform" target="_blank">日本語チェックフォーム</a><strike> に記入して大会開始時間までに送信すること。</strike>の記入は任意（しなくてもよい）ですが、日本語が怪しい場合など、記入を運営から求められる場合があります。</li>
+			</ul><h4>日程とチェックイン時間・チャットチャンネルなど</h4><ul>
+			</ul><table><tbody>
+			<tr>
+				<td>大会開始および集合時間</td>
+				<td><b>9月19日(日) 13:00 JST </b></td>
+			</tr>
+			<tr>
+				<td>チェックイン<br>
+				</td>
+				<td>同日 12:00 - 13:00<br>
+				</td>
+			</tr>
+			<tr>
+				<td>サーバー</td>
+				<td>&nbsp;KR</td>
+			</tr>
+			<tr>
+				<td>チャットチャンネル<br>
+				</td>
+				<td>&nbsp;wiki</td>
+			</tr>
+			</tbody></table><p><br></p><h4>試合形式</h4><ul>
+				<li>Double elimination </li>
+				<li>準決勝まで -<span></span><span></span> Best of 3<br>
+				</li>
+				<li>決勝戦 - Best of 5<br>
+				</li>
+			</ul><h4>マップ選択のルール<br>
+			</h4><div>
+				<ul>
+					<li>いずれの試合も第1セットは大会指定マップで行います。大会指定マップはチェックイン終了後に決定されます。</li>
+					<li>Map kick/removeはありません。<br>
+					</li>
+					<li>第二セット以降はLoser's pickです。つまり、直前のセットの敗者がマップを選択します。選択できるマップはMap poolのうちその試合で使われていないマップです。</li>
+					<li>大会指定マップはBracket(トーナメント表)の上にラウンドごとに指定されています。</li>
+				</ul>
+				<br>
+			</div><div>
+				<h4>Map Pool</h4>
+				<p>以下の７マップです。現シーズンのラダーマップと同じです。<br></p>
+			</div><div>
+				<ul>
+
+					<li>Coda LE</li>
+					<li>Terraform LE</li>
+					<li>Iron Fortress</li>
+					<li>Cactus Valley</li>
+					<li>Bridgehead LE</li>
+					<li>Moonlight Madness LE<br>
+					<li>Dash and Terminal LE</li>
+					</li>
+				</ul>
+			</div>
+				<div>
+					<h4>不戦勝・大会中の離席について</h4>
+					<ul>
+						<li>自分がゲーム内チャンネルにいるのにも関わらず対戦相手と連絡がつかない、反応がない場合にはすぐ
+							にチャットで運営メンバー（というかLapack）に報告してください。（報告する義務があると考えてください）報告後15分経っても対戦相手が現れない
+							場合は不戦勝として進行します。</li>
+						<li>数分以上離席する場合は必ず対戦相手に「離席します」と告げてください。ただし、15分以上離席する必要がある場合は対戦相手にだけでなく、運営メンバーにも告げてください。告げてくれれば進行上可能な限りは離席を認めるつもりです。</li>
+					</ul>
+
+					<h4>Observerと配信について<br>
+					</h4>
+					<ul>
+						<li>本ルールに記載されている公式配信者以外を試合のObserverに入れることは禁止します。</li>
+						<li>自分の試合をプレイ画面配信することはむしろ推奨しますが、コメント読み上げ機能など視聴者から助力を受けてしまう可能性があるツールはOFFにしてください。</li>
+					</ul>
+					<h4>リプレイアップロードと結果報告</h4>
+					<p>試合終了後、次のラウンドの試合を開始するまでに、勝者はChallongeトーナメント表に試合結果を報告し、Challongeにリプレイをアップロードしてください。</p>
+					<p><br></p>
+					<h4>不測の事態</h4>このルールでカバーしきれない不測の事態や微妙な問題が発生した場合には、運営代表者(Lapack)の責任で裁定を行います。<br><br><h3>賞品</h3>
+					<h4>賞品</h4>
+					<ul>
+						<li>
+							<b>優勝者および準優勝者: Amazonギフト券 </b><span></span>
+						</li>
+						<ul><li><span>Amazon.co.jpでは使えますが、海外のAmazonだと使えないようです。受け取りにはメールアドレスが必要です。（なんのアドレスでもOKです）</span></li></ul>
+					</ul>
+					<h2>公式配信</h2>
+					<ul>
+						<li>horikenさんによる実況配信が行われます！</li>
+						<li><a href="http://www.twitch.tv/horiken3">http://www.twitch.tv/horiken3</a></li>
+
+					</ul>
+					<ul>
+					</ul>
+					<p><br></p>
+					<h3>主催者連絡先</h3>
+					<ul>
+						<li>
+							<a href="https://twitter.com/_Lapack" target="_blank">Twitter _Lapack</a> <br>
+						</li>
+						<li>
+							<a href="mailto:sc2jpwikieditors@@gmail.com" target="">email</a> ﷯<br>
+						</li>
+					</ul>
+					<p>不明点などがあれば上記のいずれかにおねがいします。<br></p>
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>
+	<!-//////////////////////////////////////////////>>
+	<div id="donation" class="tabswitch">
+		<div class="jumbotron">
+			<h2>第2回Wikiトーナメントを支援するには</h2>
+			<p class="lead">How to donate</p>
+			Amazonギフト券Emailタイプにて寄付を募っております。手順は以下のとおりです。
+
+			<ol>
+				<li>Amazonギフト券 Emailタイプの購入ページに行く: <div class="aws_item_medium aws_item_amazon"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/B005FOVUS2/ref=nosim/sc2buildsjp0e-22" target="_blank"></a></div>
+					<a href="http://www.amazon.co.jp/exec/obidos/ASIN/B005FOVUS2/ref=nosim/sc2buildsjp0e-22" target="_blank">Amazonギフト券- Eメールタイプ - Amazonボックス</a><div></div></li>
+				<li>各項目を入力する。</li>
+				<ol>
+					<li>金額: 15円から選択可能です。</li>
+				<li>受取人のEメール: sc2jpwikieditors@@gmail.com</li>
+					<li>贈り主のお名前: 任意の名前・HNで構いません。メッセージとともに大会トップページに公開されます。</li>
+					<li>メッセージ: お名前とともに大会トップページに公開されます。また、寄付特典を希望される場合はその旨書いてください（希望内容は非公開です）名前やメッセージを非公開希望の場合はその旨書いていただけるようおねがいします。</li>
+
+				</ol>
+
+				<li>Amazonギフト券 Emailタイプ購入する。</li>
+			    <li>数時間から1日経つとファンディング進捗とメッセージがトップページに反映されます。</li>
+			</ol>
+
+		</div>
+</div>
+	<!-//////////////////////////////////////////////>>
+	<footer class="footer">
+		<p>&copy; <a href="#">StarCraft II: スタークラフト2 ビルドオーダー日本語Wiki 2015</a></p>
+	</footer>
+
+</div> <!-- /container -->
+</body>
+<script type="text/javascript">
+
+
+</script>
+</html>

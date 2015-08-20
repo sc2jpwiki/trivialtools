@@ -19,6 +19,9 @@ GET	/rating/matchhistory	    controllers.Players.matchhistory
 # Teamliquid Forum Editor
 GET     /tledit                     controllers.Homepage.index(name="tledit")
 
+# Donation Page
+GET     /donation                   controllers.Homepage.index(name="donation")
+
 #My Stream page
 GET     /lapack                     controllers.Homepage.index(name="lapack")
 
