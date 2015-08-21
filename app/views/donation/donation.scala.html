@@ -21,14 +21,33 @@
 
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/scheme.less")">
-<link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/1pxdeep.less")">
+
 <style type="text/css">
 	progress {
 		width: 500px;
 		height: 50px;
 		align: center;
 	}
+
+	td {
+	text-align: center;
+	vertical-align: middle;
+	}
+
+	.explanation {
+	text-align: left;
+	vertical-align: top;
+	}
+
+	th {
+	text-align: center;
+	vertical-align: middle;
+	}
+
+	.button {
+	  height: 40px
+	}
+
 
 </style>
 <script>
@@ -39,12 +58,17 @@
     $("#home").show()
 
 //BUTTON BEHAVIOR
-	$("#homebutton")
-	$("#registbutton")
-	$("#contactbutton").click(function() {
+	$("#homebutton").click(function() {
 		$(".tabswitch").hide();
 		$("li").removeClass("active");
-		$("#contactbuttun").addClass("active");
+		$("#homebutton").addClass("active");
+		$("#home").show();
+    });
+
+	 $("#contactbutton").click(function() {
+		$(".tabswitch").hide();
+		$("li").removeClass("active");
+		$("#contactbutton").addClass("active");
 		$("#contact").show();
     });
 
@@ -55,9 +79,10 @@
 		$("#rules").show();
     });
 
-    $("#donationbutton").click(function() {
+    $(".donationbutton").click(function() {
 		$(".tabswitch").hide();
 		$("li").removeClass("active");
+		$("#donationbutton").addClass("active");
 		$("#donation").show();
     });
 
@@ -70,70 +95,155 @@
 		<nav>
 			<ul class="nav nav-pills pull-right">
 				<li role="presentation" id="homebutton" class="active"><a href="#">Home</a></li>
-				<li role="presentation" id="registbutton"><a href="http://challonge.com/tournaments/signup/FHld7bDRwZ">参加登録</a></li>
+				<li role="presentation" id="registbutton"><a href="http://challonge.com/tournaments/signup/FHld7bDRwZ" target=”_blank”>参加登録</a></li>
 				<li role="presentation" id="rulebutton"><a href="#">大会ルール</a></li>
-				<li id="contact" role="presentation" id="contactbutton"><a href="#">Contact</a></li>
+				<li role="presentation" id="donationbutton" class="donationbutton"><a href="#">大会を支援する</a></li>
+
+				<li role="presentation" id="contactbutton"><a href="#">Contact</a></li>
 			</ul>
 		</nav>
 		<h3 class="text-muted">ビルドWiki不定期イベント第2弾</h3>
 	</div>
-	<!-//////////////////////////////////////////////
+	<!--//////////////////////////////////////////////-->
     <div id="home" class="tabswitch">
 	<div class="jumbotron">
+
 		<h1>第2回Wikiトーナメント </h1>
 		<hr>
+
 		<h4>ファンディング進捗: <p class="lead">￥5000/￥20000</p></h4>
 		<progress value="5000" max="20000"></progress>
 		<h4>これまでの支援者</h4>
 		<ul><li>1日間で1人が支援しています。</li><li>残り期間は30日です。</li></ul>
 		<hr>
-		<p><a class="btn btn-lg btn-success" id="donationbutton" href="#" role="button">第2回Wikiトーナメントを支援する</a></p>
-		
+		<p><a class="btn btn-lg btn-success donationbutton" href="#" role="button">第2回Wikiトーナメントを支援する</a></p>
 	</div>
+
 
 	<div class="row marketing home">
-		<div class="col-lg-6">
+		<div class="col-lg-7">
 
-			<h4>予算配分(￥20000を達成した場合）</h4>
+			<h4>予算配分(達成額が￥10000から￥20000の場合）</h4>
 			<p><ul>
-<li>1位: 50%</li>
+<li>1位: 75%</li>
 <li>2位: 25%</li>
-<li>RTキャンペーン;LotV製品版視聴者プレゼント :25%</li>
 			</ul></p>
+
+			<h4>ゴール&サブゴール</h4>
+			<table class="table table-hover">
+				<tr>
+					<th width ="20%">達成状況</th>
+					<th>サブゴールの内容および、達成時の実施事項</th>
+				</tr>
+				<tr>
+					<td class="button" ><button class="btn btn-success">達成!</button></td>
+					<td class="explanation">￥5000: トーナメント開催決定、賞品は優勝者のみ</td>
+				</tr>
+				<tr>
+					<td class="button" >
+						<button class="btn btn-primary">未達成</button>
+					</td>
+					<td class="explanation">
+						￥10000: 2位に準優勝賞品授与決定
+					</td>
+				</tr>
+				<tr>
+					<td class="button">
+						<button class="btn btn-primary">未達成</button>
+					</td>
+					<td class="explanation">
+						￥20000: 今大会の目標額
+					</td>
+				</tr>
+				<tr>
+					<td class="button">
+						<button class="btn btn-primary">未達成</button>
+					</td>
+					<td class="explanation">
+						￥25000: 最新作StarCraft II: Legacy of the Voidの視聴者プレゼント実施
+					</td>
+				</tr>
+				<tr>
+					<td class="button">
+						<button class="btn btn-primary">未達成</button>
+					</td>
+					<td class="explanation">
+						￥30000: 今大会の予算上限、万が一超えた場合は次回以降に持ち越し
+					</td>
+				</tr>
+			</table>
+
 			<h4>寄付支援者特典</h4>
-			<p><ul>
-			<li>￥10000: 公式スポンサー(1枠): 大会名と配信で使用するテーマ画像にPowered by XXXとクレジットがつきます。ロゴなどをお持ちの場合はそちらも掲載可能ですし、Webサイトをお持ちの場合大会ページおよび配信ページへリンクを掲載することも出来ます。</li>
-			<li>￥2000: コーチング(1枠)</li>
-			<li>￥1500: 記事オーダーメイド権(1枠）</li>
-			<li>￥1000: トップサポーター（枠制限なし）: ゴールドサポーターの特典に加え、大会テーマ画像に名前が掲載されます。</li>
-			<li>￥500: ゴールドサポーター: ブロンズサポーターの特典に加え、配信ページに名前が掲載されます。</li>
-			<li>￥15: ブロンズサポーター: 大会トップページに名前とメッセージが掲載されます。</li>
-		</ul></p>
+			<table class="table table-hover">
+				<tr><th width="20%">支援額と枠数</th><th width="25%">タイトル</th><th>内容</th></tr>
+				<tr>
+					<td>￥10000-1枠</td>
+					<td>公式スポンサー</td>
+					<td class="explanation">大会名と配信で使用するテーマ画像にPowered by XXXとクレジットがつきます。ロゴなどをお持ちの場合はそちらも掲載可能ですし、
+					Webサイトをお持ちの場合大会ページおよび配信ページへリンクを掲載することも出来ます。</td>
+				</tr>
 
-			<h4>ゴール: サブゴール</h4>
-			<ul>
-				<li>￥5000: トーナメント開催決定、賞品は優勝者のみ <input type="checkbox" checked="checked">達成</li>
-				<li>￥10000: 2位に準優勝賞品授与</li>
-				<li>￥15000: 最新作StarCraft II: Legacy of the Voidの視聴者プレゼント実施</li>
-				<li>￥20000: 今大会の目標額</li>
-				<li>￥30000: 今大会の予算上限、万が一超えた場合は次回以降に持ち越し</li>
-			</ul>
+				<tr class="warning">
+					<td>￥2000-1枠</td>
+					<td>コーチング</td>
+					<td class="explanation">調整中につき募集停止</td>
+				</tr>
+
+				<tr>
+					<td>￥1500-1枠</td>
+					<td>記事オーダーメイド権</td>
+					<td class="explanation">好きなテーマのSC2記事をリクエストできます。執筆者指名は希望に添えないことがあります。</td>
+				</tr>
+
+				<tr>
+					<td>￥1000-無制限枠</td>
+					<td>トップサポーター</td>
+					<td class="explanation">ゴールドサポーターの特典に加え、大会テーマ画像に名前が掲載されます。</td>
+				</tr>
+
+				<tr>
+					<td>￥500-無制限枠</td>
+					<td>ゴールドサポーター</td>
+					<td class="explanation">ブロンズサポーターの特典に加え、配信ページに名前が掲載されます。</td>
+				</tr>
+
+				<tr>
+					<td>￥15-無制限枠</td>
+					<td>ブロンズサポーター</td>
+					<td class="explanation">大会トップページに名前とメッセージが掲載されます。</td>
+				</tr>
+
+
+
+
+
+
+			</table>
+
+
+
+
 
 		</div>
 
-		<div class="col-lg-6">
-			<h4>Heartful Supporters</h4>
-			<h5>ビルドWiki</h5>
-			￥5000
+		<div class="col-lg-5">
+			<h4><strong>Heartful Supporters</strong></h4>
+			<table class="table table-bordered table-hover">
+				<tr><th>#</th></th><th>お名前</th><th>支援額</th></tr>
+				<tr class="success"><td>1</td><td>ビルドWiki</td><td>￥5000</td></tr>
+
+			</table>
+
+
 
 		</div>
 	</div>
 	</div>
-	<!-//////////////////////////////////////////////>>
+	<!--//////////////////////////////////////////////-->
     <div id="rules" class="row marketing tabswitch">
-		<div class="col-lg-8">
+		<div class="col-lg-10">
 			<div class="redactor_editor expanded">
-				<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1>第1回Wikiトーナメント<br>
+				<h1>第2回Wikiトーナメント<br>
 			</h1>
 				<hr><h2>ルール Rules<br>
 			</h2><h4>参加資格 Eligibility<br>
@@ -250,7 +360,7 @@
 
 
 	</div>
-	<!-//////////////////////////////////////////////>>
+	<!--//////////////////////////////////////////////-->
 	<div id="donation" class="tabswitch">
 		<div class="jumbotron">
 			<h2>第2回Wikiトーナメントを支援するには</h2>
@@ -265,7 +375,7 @@
 					<li>金額: 15円から選択可能です。</li>
 				<li>受取人のEメール: sc2jpwikieditors@@gmail.com</li>
 					<li>贈り主のお名前: 任意の名前・HNで構いません。メッセージとともに大会トップページに公開されます。</li>
-					<li>メッセージ: お名前とともに大会トップページに公開されます。また、寄付特典を希望される場合はその旨書いてください（希望内容は非公開です）名前やメッセージを非公開希望の場合はその旨書いていただけるようおねがいします。</li>
+					<li>メッセージ: お名前とともに大会トップページに公開されます。また、寄付特典のうち<ul><li>公式スポンサー</li><li>コーチング</li><li>記事オーダーメイド</li></ul>を希望される場合はその旨書いてください（希望内容は非公開です）名前やメッセージを非公開希望の場合はその旨書いていただけるようおねがいします。</li>
 
 				</ol>
 
@@ -275,7 +385,21 @@
 
 		</div>
 </div>
-	<!-//////////////////////////////////////////////>>
+	<!--//////////////////////////////////////////////-->
+	<div id="contact" class="tabswitch">
+		<div class="jumbotron">
+
+			<h1>主催者連絡先</h1>
+			<p>ご質問、要望、お叱り、その他メッセージは以下の連絡先にお願いいたします。</p>
+			<ul>
+				<li>
+					<a href="https://twitter.com/_Lapack" target="_blank">Twitter @@_Lapack</a> <br>
+				</li>
+				<li>
+					<a href="mailto:sc2jpwikieditors@@gmail.com" target="">Email</a><br>
+				</li>
+			</ul>
+		</div>
 	<footer class="footer">
 		<p>&copy; <a href="#">StarCraft II: スタークラフト2 ビルドオーダー日本語Wiki 2015</a></p>
 	</footer>
