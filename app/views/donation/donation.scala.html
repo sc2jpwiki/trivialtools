@@ -122,6 +122,21 @@
 var dateText = tourneyStart.toLocaleString();
   $(".tourneyStart").text(dateText)
 
+//Current Donation and Gauge animation
+var donation = 5000;
+$("#donationValue").text(donation)
+$("#progress").attr("value",0)
+var incrementGauge = function() {
+  var nextValue = Number($("#progress").attr("value")) + 50;
+  $("#progress").attr("value",nextValue)
+  if(nextValue < donation) {
+    setTimeout(function(){ 
+        incrementGauge();
+    }, 15);
+  } else {}
+}
+
+incrementGauge();
 
 
 //BUTTON BEHAVIOR
@@ -180,8 +195,8 @@ var dateText = tourneyStart.toLocaleString();
 		<h2><strong>第2回Wikiトーナメント:</strong> <strong class="tourneyStart"></strong></h2>
 		<hr>
 
-		<h4>ファンディング進捗: <p class="lead">￥5000/￥20000</p></h4>
-		<progress value="5000" max="20000"></progress>
+		<h4>ファンディング進捗: <p class="lead"><strong>￥<strong id="donationValue"></strong>/￥20000</strong></p></h4>
+		<progress id="progress" value="0" max="20000"></progress>
 		<h4>これまでの支援者</h4>
 		<div><strong id="dateFromDonationStart">1</strong>日間で<strong>1</strong>人が支援しています。</div>
 		<div>残り期間は<strong id="dateToTourney">30</strong>日です。</div>
@@ -458,7 +473,7 @@ var dateText = tourneyStart.toLocaleString();
 		<div class="jumbotron">
 
 			<h3>主催者連絡先</h3>
-			<p>ご質問、要望、お叱り、その他メッセージは以下の連絡先にお願いいたします。</p>
+			ご質問、要望、お叱り、その他メッセージは以下の連絡先にお願いいたします。
 			<ul>
 				<li>
 					<a href="https://twitter.com/_Lapack" target="_blank">Twitter @@_Lapack</a> <br>
