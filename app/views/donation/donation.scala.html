@@ -52,10 +52,77 @@
 </style>
 <script>
   $(document).ready(function(){
-    $("#rules").hide();
-    $("#regstration").hide();
-    $("#donation").hide();
+    $(".tabswitch").hide();
     $("#home").show()
+
+//TIMER
+  var tourneyStart = new Date(2015, 8, 20, 13, 0, 0, 0); //Monthだけ0はじまり
+  var donationStart = new Date(2015, 7, 22,0,0,0,0)
+  var now = new Date();
+  console.log("TouneyStarts");
+  console.log(tourneyStart);
+
+  function refreshTimer() {
+  var dateToTourney = 0
+  var dateFromDonationStart = 0
+  console.log(now.getMonth());
+
+  if(now.getMonth() > 8) {
+      console.log("now.Month > 8")
+      dateToTourney = 0;
+  } else if(now.getMonth() == 8) {
+     console.log("now.Month == 8")
+     if(now.getDate() >= tournewStart.getDate()) {
+       dateToTourney = 0;
+     } else {
+       dateToTourney = tourneyStart.getDate() - now.getDate();
+     }
+  } else if(now.getMonth() == 7) {
+     console.log("now.Month == 7")
+     dateToTourney = 31 + tourneyStart.getDate() - now.getDate();
+     console.log(dateToTourney)
+  } else {
+     //Throw Exception
+    throw new Error("Illegal Date.now() value");
+  }
+
+
+  //Donation Start karano date
+   if(now.getMonth() > 7) {
+      console.log("now.Month > 7")
+      if(now.getMonth() == 8) {
+        console.log("now.Month == 8")
+        dateFromDonationStart = 31 + now.getDate() - donationStart.getDate();
+        console.log(dateFromDonationStart)
+      } else {
+      //Throw Exception
+       throw new Error("Illegal Date.now() value");
+       }
+   } else if(now.getMonth() == 7) {
+     console.log("now.Month == 7")
+     if(now.getDate() <= donationStart.getDate()) {
+       dateFromDonationStart = 0;
+     } else {
+       dateFromDonationStart = now.getDate()-donationStart.getDate();
+     }
+  } else {
+    throw new Error("Illegal Date.now() value");
+  }
+
+  console.log(tourneyStart.getDate())
+
+  $("#dateToTourney").text(dateToTourney);
+  $("#dateFromDonationStart").text(dateFromDonationStart);
+  }
+
+  refreshTimer();
+
+
+//Tourney Start Date
+var dateText = tourneyStart.toLocaleString();
+  $(".tourneyStart").text(dateText)
+
+
 
 //BUTTON BEHAVIOR
 	$("#homebutton").click(function() {
@@ -108,13 +175,14 @@
     <div id="home" class="tabswitch">
 	<div class="jumbotron">
 
-		<h1>第2回Wikiトーナメント </h1>
+		<h2><strong>第2回Wikiトーナメント:</strong> <strong class="tourneyStart"></strong></h2>
 		<hr>
 
 		<h4>ファンディング進捗: <p class="lead">￥5000/￥20000</p></h4>
 		<progress value="5000" max="20000"></progress>
 		<h4>これまでの支援者</h4>
-		<ul><li>1日間で1人が支援しています。</li><li>残り期間は30日です。</li></ul>
+		<div><strong id="dateFromDonationStart">1</strong>日間で<strong>1</strong>人が支援しています。</div>
+		<div>残り期間は<strong id="dateToTourney">30</strong>日です。</div>
 		<hr>
 		<p><a class="btn btn-lg btn-success donationbutton" href="#" role="button">第2回Wikiトーナメントを支援する</a></p>
 	</div>
@@ -255,15 +323,15 @@
 				<li>
 					<a href="https://docs.google.com/forms/d/167cm7Ccik9dNN7AXJwkU_UiTrbM9DS155A2aPpyJUJs/viewform" target="_blank">日本語チェックフォーム</a><strike> に記入して大会開始時間までに送信すること。</strike>の記入は任意（しなくてもよい）ですが、日本語が怪しい場合など、記入を運営から求められる場合があります。</li>
 			</ul><h4>日程とチェックイン時間・チャットチャンネルなど</h4><ul>
-			</ul><table><tbody>
+			</ul><table class="table table-hover"><tbody>
 			<tr>
-				<td>大会開始および集合時間</td>
-				<td><b>9月19日(日) 13:00 JST </b></td>
+				<td width="40%">大会開始および集合時間</td>
+				<td width="40%"><b><strong class="tourneyStart"></strong> JST </b></td>
 			</tr>
 			<tr>
 				<td>チェックイン<br>
 				</td>
-				<td>同日 12:00 - 13:00<br>
+				<td>同日 大会開始1時間前から開始時刻まで<br>
 				</td>
 			</tr>
 			<tr>
@@ -389,7 +457,7 @@
 	<div id="contact" class="tabswitch">
 		<div class="jumbotron">
 
-			<h1>主催者連絡先</h1>
+			<h3>主催者連絡先</h3>
 			<p>ご質問、要望、お叱り、その他メッセージは以下の連絡先にお願いいたします。</p>
 			<ul>
 				<li>
