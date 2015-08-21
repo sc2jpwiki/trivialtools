@@ -40,7 +40,7 @@ object Homepage extends Controller {
       case "index" => Ok(views.html.index("can u help me please"))
       case "roulette" => Ok(views.html.roulette("Roulette Tool"))
       case "tledit" => Ok(views.html.tledit.tledit("Teamliquid Forum Editor"))
-      case "donation" => Ok(views.html.donation.donation("Donation"))
+      case "wikitourney" => Ok(views.html.donation.donation("Donation"))
       case "lapack" => Ok(views.html.mystream("Lapack's Stream and chat page"))
       case _ => Ok(views.html.index("Your new application is ready."))
     }

@@ -20,7 +20,7 @@ GET	/rating/matchhistory	    controllers.Players.matchhistory
 GET     /tledit                     controllers.Homepage.index(name="tledit")
 
 # Donation Page
-GET     /donation                   controllers.Homepage.index(name="donation")
+GET     /wikitourney                  controllers.Homepage.index(name="wikitourney")
 
 #My Stream page
 GET     /lapack                     controllers.Homepage.index(name="lapack")
