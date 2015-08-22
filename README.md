@@ -1,7 +1,5 @@
-This is your new Play application
+This is backend of my website
 =====================================
-
-This file will be packaged with your application, when using `play dist`.
 
 ## /wikitourney 手動で更新する箇所
 ### html
