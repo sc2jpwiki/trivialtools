@@ -55,9 +55,22 @@
     $(".tabswitch").hide();
     $("#home").show()
 
-//TIMER
+//PARAMETERS: Donation, Start Date, Subgoals
+  var donation = 16500;
   var tourneyStart = new Date(2015, 8, 20, 13, 0, 0, 0); //Monthだけ0はじまり
   var donationStart = new Date(2015, 7, 22,0,0,0,0)
+  var subgoals = {
+    first: {goal: 5000, labelId: "#firstgoal"},
+    second: {goal: 10000, labelId: "#secondgoal"},
+    present: {goal: 25000, labelId: "#thirdgoal"},
+    max: {goal: 30000, labelId: "#fourthgoal"},
+    lotvevent: {goal: 50000, labelId: "#fifthgoal"}
+    }
+
+  var subgoalsLabel = 0;
+
+//TIMER
+
   var now = new Date();
   console.log("TouneyStarts");
   console.log(tourneyStart);
@@ -123,7 +136,7 @@ var dateText = tourneyStart.toLocaleString();
   $(".tourneyStart").text(dateText)
 
 //Current Donation and Gauge animation
-var donation = 16500;
+
 $("#donationValue").text(donation)
 $("#progress").attr("value",0)
 var incrementGauge = function() {
@@ -135,8 +148,6 @@ var incrementGauge = function() {
     }, 15);
   } else {}
 }
-
-incrementGauge();
 
 
 //BUTTON BEHAVIOR
@@ -168,7 +179,24 @@ incrementGauge();
 		$("#donation").show();
     });
 
+//Reflect donation to subgoals
+////
+
+for(key in subgoals) {
+  if (donation < subgoals[key].goal) {
+    $(subgoals[key].labelId).attr("class","btn btn-primary").text("未達成")
+  } else {
+    $(subgoals[key].labelId).attr("class","btn btn-success").text("達成")
+  }
+}
+
+
+incrementGauge();
   });
+
+
+
+
 </script>
 </head>
 <body>
@@ -221,12 +249,12 @@ incrementGauge();
 					<th>サブゴールの内容および、達成時の実施事項</th>
 				</tr>
 				<tr>
-					<td class="button" ><button class="btn btn-success">達成</button></td>
+					<td class="button" ><button id="firstgoal" class="btn btn-primary"></button></td>
 					<td class="explanation"><i class="icon-check"></i>￥5000: トーナメント開催決定、賞品は優勝者のみ</td>
 				</tr>
 				<tr>
 					<td class="button" >
-						<button class="btn btn-success">達成</button>
+						<button id="secondgoal" class="btn btn-primary"></button>
 					</td>
 					<td class="explanation">
 						￥10000: 2位に準優勝賞品授与決定
@@ -234,7 +262,7 @@ incrementGauge();
 				</tr>
 				<tr>
 					<td class="button">
-						<button class="btn btn-primary">未達成</button>
+						<button id="thirdgoal" class="btn btn-primary"></button>
 					</td>
 					<td class="explanation">
 						￥25000: 最新作StarCraft II: Legacy of the Voidの視聴者プレゼント実施
@@ -242,7 +270,7 @@ incrementGauge();
 				</tr>
 				<tr>
 					<td class="button">
-						<button class="btn btn-primary">未達成</button>
+						<button id="fourthgoal" class="btn btn-primary"></button>
 					</td>
 					<td class="explanation">
 						￥30000: <strong>今大会の目標賞品総額および予算上限</strong>
@@ -251,7 +279,7 @@ incrementGauge();
 
 				<tr>
 					<td class="button">
-						<button class="btn btn-primary">未達成</button>
+						<button id="fifthgoal" class="btn btn-primary"></button>
 					</td>
 					<td class="explanation">
 						￥50000: LotVイベント開催決定

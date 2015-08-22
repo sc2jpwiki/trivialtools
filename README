@@ -2,3 +2,11 @@ This is your new Play application
 =====================================
 
 This file will be packaged with your application, when using `play dist`.
+
+## /wikitourney 手動で更新する箇所
+### html
+- Heartful Supporters
+- 寄付支援者特典
+
+### JavaScript
+- var donation = 16500;
