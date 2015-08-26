@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>第2回Wikiトーナメント</title>
 
+
+
+
 <!-- jQuery 1.9.0 -->
 <script src="//code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
 
@@ -17,7 +20,6 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 
 
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
@@ -61,7 +63,8 @@
 
 //PARAMETERS: Donation, Start Date, Subgoals
   var donation = 16500;
-  var tourneyStart = new Date(2015, 8, 20, 13, 0, 0, 0); //Monthだけ0はじまり
+  var suppurtersNum = 2;
+  var tourneyStart = new Date(2015, 9, 6, 13, 0, 0, 0); //Monthだけ0はじまり
   var donationStart = new Date(2015, 7, 22,0,0,0,0)
   var subgoals = {
     first: {goal: 5000, labelId: "#firstgoal"},
@@ -74,63 +77,161 @@
   var subgoalsLabel = 0;
 
 //TIMER
+var dateutil = {};
+
+  //if x >= y true, else false
+  dateutil.compare = function(x,y) {
+          if(x.getFullYear() > y.getFullYear()) {
+                  return true;
+          } else if(x.getFullYear() < y.getFullYear()) {
+                  return false;
+          } else if(x.getMonth() > y.getMonth()) {
+                  return true;
+          } else if(x.getMonth() < y.getMonth()) {
+                  return false;
+          } else {
+                  var diff=[];
+
+                  diff[4] = x.getDate() - y.getDate();
+                  diff[3] = x.getHours() - y.getHours();
+                  diff[2] = x.getMinutes() - y.getMinutes();
+                  diff[1] = x.getSeconds(); - y.getSeconds();
+                  diff[0] = x.getMilliseconds() - y.getMilliseconds();
+
+                  for(var i = 0;i < 4; i++){
+                          if(diff[i] < 0) {
+                                  diff[i] = diff[i] + p[i];
+                                  diff[i+1] = diff[i+1] - 1;
+                          }
+                  }
+
+                  var diffdays = diff[4];
+
+                  if(diffdays >= 0) {return true;} else { return false;};
+          }
+  }
+
+  dateutil.diff = function(x,y) {
+        var diff = [];
+        var daysArray = [31,28,31,30,31,30,31,31,30,31,30,31]
+        var daysInMonth = function(year,month) {
+                if(month != 1) {
+                        return daysArray[month+1];
+                } else {
+                        if(dateutil.leapyear(year)) {
+                                return 29;                        
+                        } else {
+                                return 28;
+                        }                
+                }
+                }; 
+        var p = [
+                function(){return 1000;}, //p[0]
+                function(){return 60;},  //p[1]
+                function(){return 60;},  //p[2]
+                function(){return 24;}, //p[3]
+                function(){
+                        return daysInMonth(); //p[4]
+                },
+                function(){return 12;}, //p[5]
+                function(){return 0;} //p[6]
+                ];
+
+        diff[4] = x.getDate() - y.getDate();
+        diff[3] = x.getHours() - y.getHours();
+        diff[2] = x.getMinutes() - y.getMinutes();
+        diff[1] = x.getSeconds(); - y.getSeconds();
+        diff[0] = x.getMilliseconds() - y.getMilliseconds();
+
+        if(!dateutil.compare(x,y)) {
+                for (var i = 0; i < 4; i++) {
+                        diff[i] = - diff[i];
+                }
+        }
+
+        for(var i = 0;i < 4; i++) {
+                if(diff[i] < 0) {
+                        diff[i] = diff[i] + p[i];
+                        diff[i+1] = diff[i+1] - 1;
+                }
+        }
+
+        var diffdays = diff[4];
+
+        var xYear = x.getFullYear();
+        var yYear = y.getFullYear();
+        var xMonth = x.getMonth();
+        var yMonth = y.getMonth(); 
+        var incrementMonth = function(y,m) {
+                m++;
+                if(m>11) {
+                        m = m - 12;
+                        y++;
+                }
+        };
+
+        if(dateutil.compare(x,y)) {
+                while(yMonth != xMonth) {
+                        diffdays = diffdays + daysInMonth(yYear,yMonth);
+                        yMonth++;
+                        if(yMonth > 11) {
+                                yMonth = yMonth - 12;
+                                yYear = yYear + 1;
+                        }
+                        console.log(yMonth);
+                }
+                while(yYear < xYear) {
+                        var delta = 0;
+                        if(dateutil.leapyear(yYear)) {delta = 366;} else {delta = 365;}
+                        diffdays = diffdays + delta;
+                        yYear++;
+                }
+        } else {
+                while(xMonth != yMonth) {
+                        diffdays = diffdays + daysInMonth(xYear,xMonth);
+                        xMonth++;
+                        if(yMonth > 11) {
+                                xMonth = xMonth - 12;
+                                xYear = xYear + 1;
+                        }
+                }
+                while(xYear < yYear) {
+                        var delta = 0;
+                        if(dateutil.leapyear(xYear)) {delta = 366;} else {delta = 365;}
+                        diffdays = diffdays + delta;
+                        xYear++;
+                }
+        } 
+        
+        return diffdays;
+
+  };
+
+  dateutil.leapyear = function(year) {
+     if(year % 400 == 0) {
+             return true;
+     } else if(year % 100 == 0) {
+             return false;
+     } else if(year % 4 == 0) {
+             return true;
+     } else {
+             return false;
+     }
+  };
 
   var now = new Date();
   console.log("TouneyStarts");
   console.log(tourneyStart);
 
   function refreshTimer() {
-  var dateToTourney = 0
-  var dateFromDonationStart = 0
-  console.log(now.getMonth());
-
-  if(now.getMonth() > 8) {
-      console.log("now.Month > 8")
-      dateToTourney = 0;
-  } else if(now.getMonth() == 8) {
-     console.log("now.Month == 8")
-     if(now.getDate() >= tournewStart.getDate()) {
-       dateToTourney = 0;
-     } else {
-       dateToTourney = tourneyStart.getDate() - now.getDate();
-     }
-  } else if(now.getMonth() == 7) {
-     console.log("now.Month == 7")
-     dateToTourney = 31 + tourneyStart.getDate() - now.getDate();
-     console.log(dateToTourney)
-  } else {
-     //Throw Exception
-    throw new Error("Illegal Date.now() value");
-  }
-
-
-  //Donation Start karano date
-   if(now.getMonth() > 7) {
-      console.log("now.Month > 7")
-      if(now.getMonth() == 8) {
-        console.log("now.Month == 8")
-        dateFromDonationStart = 31 + now.getDate() - donationStart.getDate();
-        console.log(dateFromDonationStart)
-      } else {
-      //Throw Exception
-       throw new Error("Illegal Date.now() value");
-       }
-   } else if(now.getMonth() == 7) {
-     console.log("now.Month == 7")
-     if(now.getDate() <= donationStart.getDate()) {
-       dateFromDonationStart = 0;
-     } else {
-       dateFromDonationStart = now.getDate()-donationStart.getDate();
-     }
-  } else {
-    throw new Error("Illegal Date.now() value");
-  }
-
-  console.log(tourneyStart.getDate())
+  var dateToTourney = dateutil.diff(tourneyStart,now);
+  var dateFromDonationStart = dateutil.diff(now,donationStart)
 
   $("#dateToTourney").text(dateToTourney);
   $("#dateFromDonationStart").text(dateFromDonationStart);
   }
+
+////
 
   refreshTimer();
 
@@ -141,7 +242,8 @@ var dateText = tourneyStart.toLocaleString();
 
 //Current Donation and Gauge animation
 
-$("#donationValue").text(donation)
+$("#donationValue").text(donation);
+$("#suppurtersNum").text(suppurtersNum);
 $("#progress").attr("value",0)
 var incrementGauge = function() {
   var nextValue = Number($("#progress").attr("value")) + 50;
@@ -230,7 +332,7 @@ incrementGauge();
 		<h4>ファンディング進捗: <p class="lead"><strong>￥<strong id="donationValue"></strong>/￥30000</strong></p></h4>
 		<progress id="progress" value="0" max="30000"></progress>
 		<h4>これまでの支援者</h4>
-		<div><strong id="dateFromDonationStart">1</strong>日間で<strong>1</strong>人が支援しています。</div>
+		<div><strong id="dateFromDonationStart">1</strong>日間で<strong id="suppurtersNum">1</strong>人が支援しています。</div>
 		<div>残り期間は<strong id="dateToTourney">30</strong>日です。</div>
 		<hr>
 		<p><a class="btn btn-lg btn-success donationbutton" href="#" role="button">第2回Wikiトーナメントを支援する</a></p>
@@ -238,13 +340,16 @@ incrementGauge();
 
 
 	<div class="row marketing home">
-		<div class="col-lg-7">
+		<div class="col-lg-6">
 
-			<h4>予算配分(達成額が￥10000から￥20000の場合）</h4>
+			<h4>予算配分</h4>
+<h5>達成額が￥10000から￥25000の場合</h5>
 			<p><ul>
-<li>1位: 75%</li>
-<li>2位: 25%</li>
+<li>1位: 80%</li>
+<li>2位: 20%</li>
 			</ul></p>
+達成額が￥25000を超えた場合,達成額からLotVプレゼント費用（約￥5000）を差し引いた額から、上記と同じ割合で1位と2位に配分します。
+
 
 			<h4>ゴール&サブゴール</h4>
 			<table class="table table-hover">
@@ -338,7 +443,7 @@ incrementGauge();
 
 		</div>
 
-		<div class="col-lg-5">
+		<div class="col-lg-6">
 			<h4><strong>Heartful Supporters</strong></h4>
 			<table class="table table-bordered table-hover">
 				<tr><th>#</th></th><th>お名前</th><th>支援額</th></tr>
@@ -353,6 +458,8 @@ incrementGauge();
 						<li><a href="http://www.twitch.tv/horiken3">http://www.twitch.tv/horiken3</a></li>
 
 					</ul>
+<!--			<h4>大会テーマイメージ</h4> -->
+			<!--<img width="100%" src="@routes.Assets.at("images/star_default.png")"/> -->
 
 
 
