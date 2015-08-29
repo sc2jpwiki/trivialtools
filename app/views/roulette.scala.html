@@ -62,7 +62,7 @@ flip = function() {
 slowflip = function() {
 	flip();
 	fliptime++;
-	if(fliptime > 10) {
+	if(fliptime > 25) {
 		clearInterval(timerID);
 		$("#result").css("background-color", "red");
 		$('#start').attr('disabled', false);
