@@ -21,7 +21,7 @@ html {
 .controls {
   position: fixed;
   text-align: center;
-  top: 1em;
+  top: 10em;
   width: 100%;
   word-spacing: 2em;
 }
@@ -41,7 +41,7 @@ html {
 .stopwatch {
   font-size: 5vw;
   height: 15%;
-  line-height: 25vh;
+
   text-align: center;
   text-shadow: 0 0 0.2em lime;
 }
@@ -62,14 +62,18 @@ html {
 </style>
 
 <body>
+<h1>Stopwatch in StarCraft II time</h1>
+Because SPL hides the timer in their stream...
 
+<div class="controls">
+<ul>
+	<li>		<a href="#" class="button" onClick="Stopwatch.lap();">Lap</a></li>
+<li>
+			<a href="#" class="button" onClick="Stopwatch.start();">Start</a></li>
 
-<nav class="controls">
-			<a href="#" class="button" onClick="Stopwatch.start();">Start</a>
-			<a href="#" class="button" onClick="Stopwatch.lap();">Lap</a>
-			<a href="#" class="button" onClick="Stopwatch.stop();">Stop</a>
-			<a href="#" class="button" onClick="Stopwatch.restart();">Restart</a>
-		</nav>
+	<li>		<a href="#" class="button" onClick="Stopwatch.stop();">Stop</a></li>
+	<li>			<a href="#" class="button" onClick="Stopwatch.restart();">Restart</a></li>
+		</div>
 		<div class="stopwatch"></div>
 		<table class="results"></table>
 
