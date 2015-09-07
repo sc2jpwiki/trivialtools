@@ -42,6 +42,7 @@ object Homepage extends Controller {
       case "tledit" => Ok(views.html.tledit.tledit("Teamliquid Forum Editor"))
       case "wikitourney" => Ok(views.html.donation.donation("Donation"))
       case "lapack" => Ok(views.html.mystream("Lapack's Stream and chat page"))
+      case "timer" => Ok(views.html.spltimer.timer("SC2 stopwatch"))
       case _ => Ok(views.html.index("Your new application is ready."))
     }
   }

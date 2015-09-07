@@ -22,12 +22,17 @@ GET     /tledit                     controllers.Homepage.index(name="tledit")
 # Donation Page
 GET     /wikitourney                  controllers.Homepage.index(name="wikitourney")
 
+# SPL Timer Page
+GET /timer 			    controllers.Homepage.index(name="timer")
+
 #My Stream page
 GET     /lapack                     controllers.Homepage.index(name="lapack")
 
 #ChatSample
 GET     /room/:nickName             controllers.ChatController.showRoom(nickName:String)
 GET     /room/socket/:nickName      controllers.ChatController.chatSocket(nickName:String)
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

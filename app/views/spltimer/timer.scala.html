@@ -1,0 +1,157 @@
+@(title: String)
+<html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>@title</title>
+</head>
+
+<style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #333;
+  color: lime;
+  font-family: Menlo;
+}
+
+.controls {
+  position: fixed;
+  text-align: center;
+  top: 1em;
+  width: 100%;
+  word-spacing: 2em;
+}
+
+.button {
+  color: lime;
+  font-size: 2em;
+  text-decoration: none;
+  text-shadow: 0 0 1em lime;
+}
+
+.button:hover {
+  color: white;
+  text-shadow: 0 0 1em white;
+}
+
+.stopwatch {
+  font-size: 5vw;
+  height: 15%;
+  line-height: 25vh;
+  text-align: center;
+  text-shadow: 0 0 0.2em lime;
+}
+
+.embed {
+  height: 85%;
+}
+
+.results {
+  border-color: lime;
+  margin: 0 auto;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 10em;
+}
+</style>
+
+<body>
+
+
+<nav class="controls">
+			<a href="#" class="button" onClick="Stopwatch.start();">Start</a>
+			<a href="#" class="button" onClick="Stopwatch.lap();">Lap</a>
+			<a href="#" class="button" onClick="Stopwatch.stop();">Stop</a>
+			<a href="#" class="button" onClick="Stopwatch.restart();">Restart</a>
+		</nav>
+		<div class="stopwatch"></div>
+		<table class="results"></table>
+
+</body>
+<script type="text/javascript">
+var Stopwatch = (function() {
+				var s;
+				return {
+					settings: {
+						stop: 1,
+						sw: document.querySelectorAll(".stopwatch")[0],
+						results: document.querySelectorAll(".results")[0],
+						mills: 0,
+						secs: 0,
+						mins: 0,
+						i: 1,
+						times: ["00:00:00"],
+						clearButton: "<a href=\"#\" class=\"button\" onClick=\"Stopwatch.clear();\">Clear</a>"
+					},
+					init: function() {
+						s = this.settings;
+						setInterval(this.timer, 130);
+					},
+					clear: function() {
+						s.i = 1,
+						s.times = ["00:00:00"],
+						s.results.innerHTML = s.clearButton;
+					},
+					lap: function() {
+						if (s.i === 1) {
+							s.results.innerHTML = s.clearButton;
+						}
+						s.times.push(("0" + s.mins).slice(-2) + ":"
+							 				 + ("0" + s.secs).slice(-2) + ":"
+											 + ("0" + s.mills).slice(-2));
+						var diffTime = ("0" + Math.floor(s.times[s.i].split(":")[0]
+												 - s.times[s.i-1].split(":")[0])).slice(-2)
+												 + ":"
+												 + ("0" + Math.floor(s.times[s.i].split(":")[1]
+												 - s.times[s.i-1].split(":")[1])).slice(-2)
+												 + ":"
+												 + ("0" + (s.times[s.i].split(":")[2]
+												 - s.times[s.i-1].split(":")[2])).slice(-2);
+						s.results.innerHTML = s.results.innerHTML + "<tr><td>"
+																+ s.times[s.i] + "</td><td>"
+																+ diffTime + "</td></tr>";
+						s.i++;
+					},
+					restart: function() {
+						s.mills = 0,
+						s.secs = 0,
+						s.mins = 0;
+						this.start();
+					},
+					start: function() {
+						s.stop = 0;
+					},
+					stop: function() {
+						s.stop = 1;
+					},
+					timer: function() {
+						for (var j=0; j < 18; j++) {
+						if (s.stop === 0) {
+							
+							if (s.mills === 100) {
+								s.secs++;
+								s.mills = 0;
+							}
+							if (s.secs === 60) {
+								s.mins++;
+								s.secs = 0;
+							}
+							s.sw.innerHTML = ("0" + s.mins).slice(-2) + ":"
+								 						 + ("0" + s.secs).slice(-2) + ":"
+													 	 + ("0" + s.mills).slice(-2);
+							s.mills++;
+						}
+						}
+					}
+				};
+			})();
+			Stopwatch.init();
+</script>
+
+</html>
