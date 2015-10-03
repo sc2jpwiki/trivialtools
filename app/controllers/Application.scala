@@ -49,6 +49,14 @@ object Homepage extends Controller {
 
 }
 
+//donation page
+object Donation extends Controller {
+  def index(page: String) = Action {
+    page match {
+    case _ => Ok(views.html.donation.donation(page))
+    }
+  }
+}
 
 //elo rating app
 

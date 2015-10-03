@@ -20,7 +20,9 @@ GET	/rating/matchhistory	    controllers.Players.matchhistory
 GET     /tledit                     controllers.Homepage.index(name="tledit")
 
 # Donation Page
-GET     /wikitourney                  controllers.Homepage.index(name="wikitourney")
+GET     /wikitourney                  controllers.Donation.index(page="")
+GET     /wikitourney/                  controllers.Donation.index(page="")
+GET     /wikitourney/:page                  controllers.Donation.index(page:String)
 
 # SPL Timer Page
 GET /timer 			    controllers.Homepage.index(name="timer")

@@ -1,4 +1,4 @@
-@(title: String)
+@(page: String)
 <!DOCTYPE html>
 
 <html>
@@ -309,6 +309,11 @@ for(key in subgoals) {
 
 
 incrementGauge();
+
+///初期表示
+var page = "@page";
+if(page=="rules") $("#rulebutton").click();
+
   });
 
 
