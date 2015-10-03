@@ -91,6 +91,17 @@ var dateutil = {};
                   return false;
           } else {
                   var diff=[];
+                var p = [
+                function(){return 1000;}, //p[0]
+                function(){return 60;},  //p[1]
+                function(){return 60;},  //p[2]
+                function(){return 24;}, //p[3]
+                function(){
+                        return daysInMonth(); //p[4]
+                },
+                function(){return 12;}, //p[5]
+                function(){return 0;} //p[6]
+                ];
 
                   diff[4] = x.getDate() - y.getDate();
                   diff[3] = x.getHours() - y.getHours();
@@ -100,7 +111,7 @@ var dateutil = {};
 
                   for(var i = 0;i < 4; i++){
                           if(diff[i] < 0) {
-                                  diff[i] = diff[i] + p[i];
+                                  diff[i] = diff[i] + p[i]();
                                   diff[i+1] = diff[i+1] - 1;
                           }
                   }
